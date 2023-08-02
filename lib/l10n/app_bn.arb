@@ -1,6 +1,10 @@
 {
   "logIn": "লগ ইন",
   "signUp": "সাইন আপ",
-  "appName": "ব্রেন স্টেশন ২৩"
-
+  "appName": "ব্রেন স্টেশন ২৩",
+  "welcome": "স্বাগতম",
+  "emailLabel": "ইমেইল",
+  "passwordLabel": "পাসওয়ার্ড",
+  "usernameLabel": "ইউজারনেম",
+  "submit": "সাবমিট"
 }

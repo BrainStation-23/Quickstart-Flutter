@@ -1,5 +1,10 @@
 {
   "logIn": "Sign In",
   "signUp": "Sign Up",
-  "appName": "BS23"
+  "appName": "BS23",
+  "welcome": "Welcome",
+  "emailLabel": "Email",
+  "passwordLabel": "Password",
+  "usernameLabel": "Username",
+  "submit": "Submit"
 }

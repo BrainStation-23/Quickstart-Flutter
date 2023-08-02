@@ -5,6 +5,7 @@ import 'package:qs_flutter/core/app_context.dart';
 import 'package:qs_flutter/core/base/blocs/base_bloc.dart';
 import 'package:qs_flutter/core/base/blocs/base_event.dart';
 import 'package:qs_flutter/core/base/blocs/base_state.dart';
+import 'package:qs_flutter/core/routes/route_generator.dart';
 
 import 'core/bloc/bloc_observer.dart';
 import 'core/bloc/global_bloc_providers.dart';
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
         providers: GlobalBlocProviders().providers,
         child: BlocBuilder<BaseBloc, BaseState>(
           builder: (context, state) {
-            return MaterialApp(
+            return MaterialApp.router(
               supportedLocales: getSupportedLocal(),
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               locale: state.locale,
@@ -51,13 +52,7 @@ class MyApp extends StatelessWidget {
                   ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
               darkTheme:
                   ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
-              home: Scaffold(
-                appBar: AppBar(
-                  title: const Text("Home"),
-                  centerTitle: true,
-                ),
-                body: DummyHome(),
-              ),
+              routerConfig: RouteGenerator.router,
             );
           },
         ));

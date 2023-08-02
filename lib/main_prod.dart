@@ -5,6 +5,7 @@ import 'package:qs_flutter/core/app_context.dart';
 import 'package:qs_flutter/core/base/blocs/base_bloc.dart';
 import 'package:qs_flutter/core/base/blocs/base_event.dart';
 import 'package:qs_flutter/core/base/blocs/base_state.dart';
+import 'package:qs_flutter/core/base/widgets/AppTextField.dart';
 
 import 'core/bloc/bloc_observer.dart';
 import 'core/bloc/global_bloc_providers.dart';
@@ -69,6 +70,8 @@ class DummyHome extends StatelessWidget {
 
   DummyHome({super.key});
 
+  final TextEditingController _textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     _appLocalizations = AppLocalizations.of(context);
@@ -83,11 +86,21 @@ class DummyHome extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(_appLocalizations?.logIn ?? ""),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: AppTextField(
+                    controller: _textEditingController,
+                    obscureText: true,
+                    labelText: 'Email',
+                    onChanged: (value) {},
+                  ),
+                ),
                 TextButton(
                     onPressed: () {
-                      context
-                          .read<BaseBloc>()
-                          .add(ChangeLanguageEvent(locale: Locale('bn_US')));
+                      context.read<BaseBloc>().add(ChangeLanguageEvent(
+                          locale: state.locale == const Locale('en')
+                              ? const Locale('bn')
+                              : const Locale('en')));
                     },
                     child: const Text("Change Language"))
               ],

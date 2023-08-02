@@ -6,14 +6,14 @@ import 'flavors/environment.dart';
 import 'main_prod.dart';
 
 void main() {
-  EnvConfig devConfig = EnvConfig(
+  EnvConfig qaConfig = EnvConfig(
     appName: "QA",
     baseUrl: "xyz",
   );
 
   BuildConfig.instantiate(
     envType: Environment.QA,
-    envConfig: devConfig,
+    envConfig: qaConfig,
   );
 
   runApp(MyApp());

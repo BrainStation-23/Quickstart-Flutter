@@ -16,5 +16,5 @@ void main() {
     envConfig: devConfig,
   );
 
-  runApp( MyApp());
+  runApp(const MyApp());
 }

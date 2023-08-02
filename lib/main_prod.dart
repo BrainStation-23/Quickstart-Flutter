@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:qs_flutter/core/app_context.dart';
 import 'package:qs_flutter/core/base/blocs/base_bloc.dart';
 import 'package:qs_flutter/core/base/blocs/base_event.dart';
@@ -14,6 +15,8 @@ import 'core/theme/color.schema.dart';
 import 'flavors/build_config.dart';
 import 'flavors/env_config.dart';
 import 'flavors/environment.dart';
+
+import 'router/app_router.dart';
 
 void main() async {
   EnvConfig prodConfig = EnvConfig(
@@ -38,10 +41,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     AppContext.instantiate(context: context);
     return MultiBlocProvider(
-        providers: GlobalBlocProviders().providers,
+        providers: [
+          ...GlobalBlocProviders().providers,
+          Provider<AppRouter>(
+            lazy: false,
+            create: (BuildContext createContext) => AppRouter(),
+          ),
+        ],
         child: BlocBuilder<BaseBloc, BaseState>(
           builder: (context, state) {
-            return MaterialApp(
+            final router =
+                Provider.of<AppRouter>(context, listen: false).router;
+            return MaterialApp.router(
+              routerConfig: router,
               supportedLocales: getSupportedLocal(),
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               locale: state.locale,
@@ -51,13 +63,6 @@ class MyApp extends StatelessWidget {
                   ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
               darkTheme:
                   ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
-              home: Scaffold(
-                appBar: AppBar(
-                  title: const Text("Home"),
-                  centerTitle: true,
-                ),
-                body: DummyHome(),
-              ),
             );
           },
         ));

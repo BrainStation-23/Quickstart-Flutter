@@ -189,6 +189,33 @@ class ScaffoldWithNavBar extends StatelessWidget {
         currentIndex: _calculateSelectedIndex(context),
         onTap: (int idx) => _onItemTapped(idx, context),
       ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              title: const Text('Home'),
+              onTap: () {
+                GoRouter.of(context).goNamed(AppRoutes.home);
+                Navigator.pop(context); // Close the drawer after navigation
+              },
+            ),
+            ListTile(
+              title: const Text('Dash'),
+              onTap: () {
+                GoRouter.of(context).goNamed(AppRoutes.dashTab);
+                Navigator.pop(context); // Close the drawer after navigation
+              },
+            ),
+            ListTile(
+              title: const Text('Profile'),
+              onTap: () {
+                GoRouter.of(context).goNamed(AppRoutes.profileTab);
+                Navigator.pop(context); // Close the drawer after navigation
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 

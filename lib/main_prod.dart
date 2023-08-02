@@ -87,7 +87,7 @@ class DummyHome extends StatelessWidget {
                     onPressed: () {
                       context
                           .read<BaseBloc>()
-                          .add(ChangeLanguageEvent(locale: Locale('bn_US')));
+                          .add(ChangeLanguageEvent(locale: Locale('en')));
                     },
                     child: const Text("Change Language"))
               ],

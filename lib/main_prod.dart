@@ -12,6 +12,7 @@ import 'core/bloc/global_bloc_providers.dart';
 import 'core/di/injection_container.dart' as di;
 import 'core/localization.dart';
 import 'core/theme/color.schema.dart';
+import 'core/theme/page_transitions_theme.dart';
 import 'flavors/build_config.dart';
 import 'flavors/env_config.dart';
 import 'flavors/environment.dart';
@@ -59,10 +60,16 @@ class MyApp extends StatelessWidget {
               locale: state.locale,
               debugShowCheckedModeBanner: false,
               themeMode: state.themeMode,
-              theme:
-                  ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
-              darkTheme:
-                  ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
+              theme: ThemeData(
+                useMaterial3: true,
+                colorScheme: lightColorScheme,
+                pageTransitionsTheme: pageTransitionsTheme,
+              ),
+              darkTheme: ThemeData(
+                useMaterial3: true,
+                colorScheme: darkColorScheme,
+                pageTransitionsTheme: pageTransitionsTheme,
+              ),
             );
           },
         ));

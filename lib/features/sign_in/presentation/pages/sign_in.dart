@@ -16,8 +16,11 @@ class SignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _appLocalizations = AppLocalizations.of(context);
-    _emailController.text = email ?? "";
-    _passwordController.text = password ?? "";
+
+    if (email != '' && password != '') {
+      _emailController.text = email ?? "";
+      _passwordController.text = password ?? "";
+    }
 
     return Scaffold(
       body: Padding(

@@ -50,26 +50,35 @@ class RouteGenerator {
           ),
         ],
       ),
-      ShellRoute(
-        navigatorKey: shellRouterKey,
-        builder: (context, state, child) {
-          return ScaffoldWithNavBar(child: child);
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          return ScaffoldWithNestedNavigation(navigationShell: navigationShell);
         },
-        routes: <RouteBase>[
-          GoRoute(
-            name: Routes.home,
-            path: "/${Routes.home}",
-            pageBuilder: (context, state) {
-              return const MaterialPage(child: Home());
-            },
+        branches: [
+          StatefulShellBranch(
+            navigatorKey: shellNavigatorHomeKey,
+            routes: <RouteBase>[
+              GoRoute(
+                name: Routes.home,
+                path: "/${Routes.home}",
+                pageBuilder: (context, state) {
+                  return const MaterialPage(child: Home());
+                },
+              ),
+            ],
           ),
-          GoRoute(
-            name: Routes.profile,
-            path: "/${Routes.profile}",
-            pageBuilder: (context, state) {
-              return const MaterialPage(child: Profile());
-            },
-          )
+          StatefulShellBranch(
+            navigatorKey: shellNavigatorProfileKey,
+            routes: <RouteBase>[
+              GoRoute(
+                name: Routes.profile,
+                path: "/${Routes.profile}",
+                pageBuilder: (context, state) {
+                  return const MaterialPage(child: Profile());
+                },
+              ),
+            ],
+          ),
         ],
       )
     ],

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qs_flutter/core/routes/config.dart';
 import 'package:qs_flutter/core/routes/navbar.dart';
 import 'package:qs_flutter/core/routes/routes.dart';
 import 'package:qs_flutter/features/home/presentation/pages/home.dart';
@@ -9,11 +8,17 @@ import 'package:qs_flutter/features/profile/presentation/pages/profile.dart';
 import 'package:qs_flutter/features/sign_in/presentation/pages/sign_in.dart';
 import 'package:qs_flutter/features/sign_up/presentation/pages/sign_up.dart';
 
+const isLoggedIn = false;
+
 class RouteGenerator {
   static final GoRouter router = GoRouter(
-    navigatorKey: rootRouterKey,
-    initialLocation: "/",
-    routes: <RouteBase>[
+    errorBuilder: (context, state) {
+      return const Center(
+
+        child: Scaffold(body: Center(child: Text(""))),
+      );
+    },
+    routes: [
       GoRoute(
         path: '/',
         redirect: (context, state) {
@@ -23,30 +28,19 @@ class RouteGenerator {
       GoRoute(
         name: Routes.landing,
         path: "/${Routes.landing}",
-        pageBuilder: (context, state) {
-          return MaterialPage(child: Landing());
+        builder: (context, state) {
+          return Landing();
         },
-        routes: <RouteBase>[
+        routes: [
           GoRoute(
             name: Routes.signIn,
             path: Routes.signIn,
-            pageBuilder: (context, state) {
-              var email = state.uri.queryParameters['email'] ?? '';
-              var password = state.uri.queryParameters['password'] ?? '';
-
-              return MaterialPage(
-                  child: SignIn(
-                email: email,
-                password: password,
-              ));
-            },
+            builder: (context, state) => SignIn(),
           ),
           GoRoute(
             name: Routes.signUp,
             path: Routes.signUp,
-            pageBuilder: (context, state) {
-              return MaterialPage(child: SignUp());
-            },
+            builder: (context, state) => SignUp(),
           ),
         ],
       ),
@@ -56,20 +50,18 @@ class RouteGenerator {
         },
         branches: [
           StatefulShellBranch(
-            navigatorKey: shellNavigatorHomeKey,
-            routes: <RouteBase>[
+            routes: [
               GoRoute(
                 name: Routes.home,
                 path: "/${Routes.home}",
-                pageBuilder: (context, state) {
-                  return const MaterialPage(child: Home());
+                builder: (context, state) {
+                  return const Home();
                 },
               ),
             ],
           ),
           StatefulShellBranch(
-            navigatorKey: shellNavigatorProfileKey,
-            routes: <RouteBase>[
+            routes: [
               GoRoute(
                 name: Routes.profile,
                 path: "/${Routes.profile}",

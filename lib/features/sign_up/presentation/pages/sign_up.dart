@@ -66,7 +66,7 @@ class SignUp extends StatelessWidget {
                   const Text("Already have an account?"),
                   TextButton(
                     onPressed: () {
-                      context.goNamed(Routes.signIn);
+                      context.goNamed("${Routes.signIn}");
                     },
                     child: const Text("login"),
                   ),

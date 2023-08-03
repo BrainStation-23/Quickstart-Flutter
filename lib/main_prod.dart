@@ -13,6 +13,7 @@ import 'core/bloc/global_bloc_providers.dart';
 import 'core/di/injection_container.dart' as di;
 import 'core/localization.dart';
 import 'core/theme/color.schema.dart';
+import 'core/utils/transitions.dart';
 import 'flavors/build_config.dart';
 import 'flavors/env_config.dart';
 import 'flavors/environment.dart';
@@ -50,9 +51,11 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               themeMode: state.themeMode,
               theme:
-                  ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+                  ThemeData(useMaterial3: true, colorScheme: lightColorScheme,
+                    pageTransitionsTheme: pageTransitionsTheme),
               darkTheme:
-                  ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
+                  ThemeData(useMaterial3: true, colorScheme: darkColorScheme,
+                    pageTransitionsTheme: pageTransitionsTheme),
               routerConfig: RouteGenerator.router,
             );
           },
@@ -60,52 +63,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class DummyHome extends StatelessWidget {
-  late AppLocalizations? _appLocalizations;
-
-  DummyHome({super.key});
-
-  final TextEditingController _textEditingController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    _appLocalizations = AppLocalizations.of(context);
-    return BlocBuilder<BaseBloc, BaseState>(
-      builder: (context, state) {
-        return Scaffold(
-          body: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(_appLocalizations?.logIn ?? ""),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: AppTextField(
-                    controller: _textEditingController,
-                    obscureText: true,
-                    labelText: 'Email',
-                    onChanged: (value) {},
-                  ),
-                ),
-                TextButton(
-                    onPressed: () {
-                      context
-                          .read<BaseBloc>()
-                          .add(ChangeLanguageEvent(locale: Locale('en')));
-                      context.read<BaseBloc>().add(ChangeLanguageEvent(
-                          locale: state.locale == const Locale('en')
-                              ? const Locale('bn')
-                              : const Locale('en')));
-                    },
-                    child: const Text("Change Language"))
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-}

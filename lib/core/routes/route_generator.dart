@@ -14,7 +14,6 @@ class RouteGenerator {
   static final GoRouter router = GoRouter(
     errorBuilder: (context, state) {
       return const Center(
-
         child: Scaffold(body: Center(child: Text(""))),
       );
     },
@@ -28,9 +27,7 @@ class RouteGenerator {
       GoRoute(
         name: Routes.landing,
         path: "/${Routes.landing}",
-        builder: (context, state) {
-          return Landing();
-        },
+        builder: (context, state) => Landing(),
         routes: [
           GoRoute(
             name: Routes.signIn,
@@ -54,9 +51,7 @@ class RouteGenerator {
               GoRoute(
                 name: Routes.home,
                 path: "/${Routes.home}",
-                builder: (context, state) {
-                  return const Home();
-                },
+                builder: (context, state) => const Home(),
               ),
             ],
           ),
@@ -65,9 +60,7 @@ class RouteGenerator {
               GoRoute(
                 name: Routes.profile,
                 path: "/${Routes.profile}",
-                pageBuilder: (context, state) {
-                  return const MaterialPage(child: Profile());
-                },
+                builder: (context, state) => const Profile(),
               ),
             ],
           ),

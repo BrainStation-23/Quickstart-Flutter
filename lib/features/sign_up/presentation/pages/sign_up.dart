@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qs_flutter/core/routes/routes.dart';
 import 'package:qs_flutter/core/values/app_values.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../../core/base/widgets/AppTextField.dart';
 
 class SignUp extends StatelessWidget {
   late AppLocalizations? _appLocalizations;
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
   SignUp({super.key});
 
   @override
@@ -24,30 +27,29 @@ class SignUp extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              TextFormField(
+              AppTextField(
                 controller: _usernameController,
-                decoration: InputDecoration(
-                    labelText: _appLocalizations?.usernameLabel ?? ""),
+                labelText: "User Name",
+                onChanged: (value) {},
               ),
               const SizedBox(
                 height: AppValues.height_16,
               ),
-              TextFormField(
+              AppTextField(
                 controller: _emailController,
-                decoration: InputDecoration(
-                    labelText: _appLocalizations?.emailLabel ?? ""),
+                labelText: "Email",
+                onChanged: (value) {},
               ),
               const SizedBox(
-                height: AppValues.height_16,
+                height: 10,
               ),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                    labelText: _appLocalizations?.passwordLabel ?? ""),
-                obscureText: true,
-              ),
+              AppTextField(
+                  controller: _passwordController,
+                  labelText: "Password",
+                  onChanged: (value) {},
+                  obscureText: true),
               const SizedBox(
-                height: AppValues.height_16,
+                height: 10,
               ),
               ElevatedButton(
                 onPressed: () {
@@ -62,13 +64,21 @@ class SignUp extends StatelessWidget {
                 height: AppValues.height_16,
               ),
               Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text("Already have an account?"),
+                  const SizedBox(
+                    width: 10,
+                  ),
                   TextButton(
                     onPressed: () {
                       context.goNamed("${Routes.signIn}");
                     },
-                    child: const Text("login"),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Text("login"),
+                    ),
                   ),
                 ],
               ),

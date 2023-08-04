@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'flavors/build_config.dart';
 import 'flavors/env_config.dart';
 import 'flavors/environment.dart';
-import 'main_prod.dart';
+import 'my_app.dart';
 
 void main() {
   EnvConfig qaConfig = EnvConfig(
@@ -16,5 +16,5 @@ void main() {
     envConfig: qaConfig,
   );
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }

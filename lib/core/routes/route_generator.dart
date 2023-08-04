@@ -5,10 +5,8 @@ import 'package:qs_flutter/core/routes/routes.dart';
 import 'package:qs_flutter/features/home/presentation/pages/home.dart';
 import 'package:qs_flutter/features/landing/presentation/pages/landing.dart';
 import 'package:qs_flutter/features/profile/presentation/pages/profile.dart';
-import 'package:qs_flutter/features/sign_in/presentation/pages/sign_in.dart';
+import 'package:qs_flutter/features/sign_in/presentation/pages/sign_in_screen.dart';
 import 'package:qs_flutter/features/sign_up/presentation/pages/sign_up.dart';
-
-const isLoggedIn = false;
 
 class RouteGenerator {
   static final GoRouter router = GoRouter(

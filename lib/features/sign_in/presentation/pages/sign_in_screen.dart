@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qs_flutter/core/base/widgets/AppTextField.dart';
 import 'package:qs_flutter/core/routes/routes.dart';
 import 'package:qs_flutter/core/validators/input_validators.dart';
 import 'package:qs_flutter/core/values/app_values.dart';
@@ -32,23 +33,15 @@ class SignIn extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(
-                    labelText: _appLocalizations?.emailLabel ?? ""),
-              ),
-              const SizedBox(
-                height: AppValues.height_16,
-              ),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                    labelText: _appLocalizations?.passwordLabel ?? ""),
-                obscureText: true,
-              ),
-              const SizedBox(
-                height: AppValues.height_16,
-              ),
+             AppTextField(controller: _emailController, labelText: "Email", onChanged: (value){
+
+             },),
+              const SizedBox(height: 10,),
+              AppTextField(controller: _passwordController, labelText: "Password", onChanged: (value){
+
+              },obscureText: true),
+              const SizedBox(height: 10,),
+
               ElevatedButton(
                   onPressed: () {
                     context.goNamed(Routes.home);

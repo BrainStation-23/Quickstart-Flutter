@@ -33,18 +33,25 @@ class SignIn extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-             AppTextField(controller: _emailController, labelText: "Email", onChanged: (value){
-
-             },),
-              const SizedBox(height: 10,),
-              AppTextField(controller: _passwordController, labelText: "Password", onChanged: (value){
-
-              },obscureText: true),
-              const SizedBox(height: 10,),
-
+              AppTextField(
+                controller: _emailController,
+                labelText: "Email",
+                onChanged: (value) {},
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              AppTextField(
+                  controller: _passwordController,
+                  labelText: "Password",
+                  onChanged: (value) {},
+                  obscureText: true),
+              const SizedBox(
+                height: 10,
+              ),
               ElevatedButton(
                   onPressed: () {
-                    context.goNamed(Routes.home);
+                    context.goNamed(Routes.introduction);
                   },
                   child: Text(_appLocalizations?.submit ?? ""))
             ],

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:qs_flutter/core/routes/navbar.dart';
 import 'package:qs_flutter/core/routes/routes.dart';
 import 'package:qs_flutter/features/home/presentation/pages/home.dart';
+import 'package:qs_flutter/features/introduction/presentation/pages/introduction_screen.dart';
 import 'package:qs_flutter/features/landing/presentation/pages/landing.dart';
 import 'package:qs_flutter/features/profile/presentation/pages/profile.dart';
 import 'package:qs_flutter/features/sign_in/presentation/pages/sign_in_screen.dart';
@@ -36,6 +37,11 @@ class RouteGenerator {
             name: Routes.signUp,
             path: Routes.signUp,
             builder: (context, state) => SignUp(),
+          ),
+          GoRoute(
+            name: Routes.introduction,
+            path: Routes.introduction,
+            builder: (context, state) => const Introduction(),
           ),
         ],
       ),

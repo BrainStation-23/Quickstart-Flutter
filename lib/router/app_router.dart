@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qs_flutter/features/auth/presentation/pages/landing_page.dart';
 
 import '../core/values/app_routes.dart';
 
@@ -12,7 +13,7 @@ class AppRouter {
   final router = GoRouter(
     navigatorKey: _rootNavigatorKey,
     debugLogDiagnostics: true,
-    initialLocation: '/landing',
+    initialLocation: '/login',
     routes: [
       GoRoute(
         path: '/',
@@ -93,11 +94,7 @@ class AppRouter {
         path: '/landing',
         name: AppRoutes.landing,
         pageBuilder: (context, state) => MaterialPage(
-          child: const PlaceHolderPage(
-            title: "Landing",
-            text: "Landing",
-            navigateTo: AppRoutes.signIn,
-          ),
+          child: const LandingPage(),
           key: state.pageKey,
         ),
       ),

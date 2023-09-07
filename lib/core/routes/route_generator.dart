@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qs_flutter/core/routes/error_screen.dart';
 import 'package:qs_flutter/core/routes/navbar.dart';
 import 'package:qs_flutter/core/routes/routes.dart';
 import 'package:qs_flutter/features/home/presentation/pages/home.dart';
 import 'package:qs_flutter/features/introduction/presentation/pages/introduction_screen.dart';
-import 'package:qs_flutter/features/landing/presentation/pages/landing.dart';
+import 'package:qs_flutter/features/landing/presentation/pages/landing_screen.dart';
 import 'package:qs_flutter/features/profile/presentation/pages/profile.dart';
 import 'package:qs_flutter/features/sign_in/presentation/pages/sign_in_screen.dart';
 import 'package:qs_flutter/features/sign_up/presentation/pages/sign_up.dart';
@@ -12,9 +12,7 @@ import 'package:qs_flutter/features/sign_up/presentation/pages/sign_up.dart';
 class RouteGenerator {
   static final GoRouter router = GoRouter(
     errorBuilder: (context, state) {
-      return const Center(
-        child: Scaffold(body: Center(child: Text(""))),
-      );
+      return const ErrorPage();
     },
     routes: [
       GoRoute(
@@ -26,13 +24,13 @@ class RouteGenerator {
       GoRoute(
         name: Routes.landing,
         path: "/${Routes.landing}",
-        builder: (context, state) => Landing(),
+        builder: (context, state) => const LandingScreen(),
+      ),
+      GoRoute(
+        name: Routes.signIn,
+        path:"/${Routes.signIn}" ,
+        builder: (context, state) => SignIn(),
         routes: [
-          GoRoute(
-            name: Routes.signIn,
-            path: Routes.signIn,
-            builder: (context, state) => SignIn(),
-          ),
           GoRoute(
             name: Routes.signUp,
             path: Routes.signUp,
@@ -43,8 +41,9 @@ class RouteGenerator {
             path: Routes.introduction,
             builder: (context, state) => const Introduction(),
           ),
-        ],
+        ]
       ),
+
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return ScaffoldWithNestedNavigation(navigationShell: navigationShell);

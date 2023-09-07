@@ -5,4 +5,7 @@ Future<void> _initBlocs() async {
     () => BaseBloc<BaseEvent, BaseState>(
         const BaseState(themeMode: ThemeMode.system, locale: Locale('bn'))),
   );
+  sl.registerFactory(
+        () => LandingBloc(const LandingState(landingStatus: LandingStatus.initial)),
+  );
 }

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-enum LandingStatus { initial, navigate, failed }
+enum LandingStatus { initial, navigate}
 
 class LandingState extends Equatable {
   final LandingStatus landingStatus;

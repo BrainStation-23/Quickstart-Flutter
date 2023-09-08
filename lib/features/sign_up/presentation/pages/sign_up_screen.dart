@@ -31,8 +31,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _birthDateController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
 
-  DateTime _selectedDate = DateTime.now();
-
   @override
   Widget build(BuildContext context) {
     _appLocalizations = AppLocalizations.of(context);
@@ -46,11 +44,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
             _birthDateController.text = '';
             _emailController.text = '';
             _phoneNumberController.text = '';
-            _selectedDate = DateTime.now();
             context.read<SignUpBloc>().add(SignUpStatusChange());
           } else if (state.status == SignUpStatus.failure) {
-            showSnackBarMessage(
-                context, "Something is wrong", SnackBarMessageType.failure);
+            showSnackBarMessage(context, _appLocalizations?.failedMessage ?? "",
+                SnackBarMessageType.failure);
           } else if (state.status == SignUpStatus.verify_otp) {
             showSnackBarMessage(
                 context, state.responseMessage, SnackBarMessageType.success);
@@ -100,9 +97,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         const SizedBox(
                           height: AppValues.halfPadding,
                         ),
-
-                      _buildPasswordTextField(),
-                         const SizedBox(
+                        _buildPasswordTextField(),
+                        const SizedBox(
                           height: AppValues.padding,
                         ),
                         _buildSubmitButton(state),
@@ -139,8 +135,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Divider(),
           ),
           Flexible(
-            flex: 2,
-            child: Text(_appLocalizations?.orCreateAccountWith ?? ""),
+            flex: 3,
+            child: FittedBox(child: Text(_appLocalizations?.orCreateAccountWith ?? "")),
           ),
           const Flexible(
             flex: 1,
@@ -164,7 +160,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             onPressed: () {},
           ),
           const AppSpacer(
-            width: 8,
+            width: AppValues.padding,
           ),
           IconButton(
             icon: SvgPicture.asset(AppAssets.facebookSVG),
@@ -174,6 +170,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
+
   Widget _buildFirsNameField() {
     return Flexible(
       child: ListTile(
@@ -244,21 +241,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
       subtitle: Padding(
         padding: const EdgeInsets.only(top: AppValues.smallMargin),
         child: AppTextField(
-          onChanged: (value) {
-            context.read<SignUpBloc>().add(
-                  EmailChangeEvent(
-                    email: value ?? "",
-                  ),
-                );
-          },
-          controller: _emailController,
-          validator: InputValidators.email,
-          labelText: _appLocalizations?.emailLabel ?? "",
-          prefix: const Icon(Icons.email_outlined)
-        ),
+            onChanged: (value) {
+              context.read<SignUpBloc>().add(
+                    EmailChangeEvent(
+                      email: value ?? "",
+                    ),
+                  );
+            },
+            controller: _emailController,
+            validator: InputValidators.email,
+            labelText: _appLocalizations?.emailLabel ?? "",
+            prefix: const Icon(Icons.email_outlined)),
       ),
     );
   }
+
   Image _buildAppHeader() {
     return Image.asset(
       AppAssets.appLogo,
@@ -290,71 +287,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           controller: _phoneNumberController,
           validator: InputValidators.phone,
           labelText: _appLocalizations?.phoneLabel ?? "",
-          prefix:const Icon(Icons.phone_iphone_outlined),
+          prefix: const Icon(Icons.phone_iphone_outlined),
         ),
       ),
     );
   }
-
-  // Widget _buildBirthDateField(SignUpState state) {
-  //   return ListTile(
-  //     contentPadding: EdgeInsets.zero,
-  //     title: Padding(
-  //       padding: const EdgeInsets.only(left: AppValues.margin_2),
-  //       child: Text(
-  //         _appLocalizations?.birthdateFormTitle ?? "",
-  //       ),
-  //     ),
-  //     subtitle: Padding(
-  //       padding: const EdgeInsets.only(top: AppValues.smallMargin),
-  //       child: OutlinedButton(
-  //         onPressed: () async {
-  //           await _selectDate(context);
-  //         },
-  //         style: OutlinedButton.styleFrom(
-  //           shape: RoundedRectangleBorder(
-  //             borderRadius: BorderRadius.circular(10),
-  //           ),
-  //           side: BorderSide(
-  //             color: state.isAgeValidate
-  //                 ? AppColors.formBorderColor
-  //                 : Theme.of(context).colorScheme.error,
-  //             width: 1,
-  //           ),
-  //           padding: const EdgeInsets.symmetric(
-  //             vertical: AppValues.buttonVerticalPadding,
-  //           ),
-  //         ),
-  //         child: Center(
-  //           child: Row(
-  //             mainAxisAlignment: MainAxisAlignment.start,
-  //             children: [
-  //               const SizedBox(
-  //                 width: AppValues.margin_14,
-  //               ),
-  //               SvgPicture.asset("assets/svg/birthdate_prefix.svg"),
-  //               const SizedBox(
-  //                 width: AppValues.margin_14,
-  //               ),
-  //               Text(
-  //                 _birthDateController.text == ""
-  //                     ? _appLocalizations?.birthdateFormLabel ?? ""
-  //                     : _birthDateController.text,
-  //                 style: TextStyle(
-  //                   fontSize: 16,
-  //                   fontWeight: FontWeight.w400,
-  //                   color: state.isAgeValidate
-  //                       ? AppColors.formLabelColor
-  //                       : Theme.of(context).colorScheme.error,
-  //                 ),
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget _buildPasswordTextField() {
     return ListTile(
@@ -370,7 +307,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           top: AppValues.smallMargin,
         ),
         child: AppTextField(
-
             prefix: const Icon(Icons.password_outlined),
             controller: _passwordController,
             labelText: _appLocalizations?.fieldLabelTextPassword ?? "",
@@ -416,54 +352,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-       const Text("Already Have Account?"),
-        const SizedBox(width: AppValues.halfPadding,),
-        TextButton(onPressed: (){
-          context.pop();
-        }, child: const Text("Sign In"))
+        Text(_appLocalizations?.alreadyHaveAccount ?? ""),
+        const SizedBox(
+          width: AppValues.halfPadding,
+        ),
+        TextButton(
+            onPressed: () {
+              context.pop();
+            },
+            child: Text(_appLocalizations?.logIn ?? ""))
       ],
     );
   }
-  // Future<void> _selectDate(BuildContext context) async {
-  //   final DateTime? picked = await showDatePicker(
-  //     context: context,
-  //     initialDate: _birthDateController.text == ""
-  //         ? _selectedDate
-  //         : _birthDateController.text.toDate(),
-  //     initialDatePickerMode: DatePickerMode.year,
-  //     firstDate: DateTime(1900),
-  //     lastDate: DateTime.now(),
-  //     confirmText: "Select",
-  //     cancelText: "Cancel",
-  //     builder: (context, child) {
-  //       return Theme(
-  //         data: Theme.of(context).copyWith(
-  //           colorScheme: const ColorScheme.light(primary: Colors.green),
-  //           textButtonTheme: TextButtonThemeData(
-  //             style: TextButton.styleFrom(
-  //               foregroundColor: Colors.green.shade800, // button text color
-  //             ),
-  //           ),
-  //         ),
-  //         child: child!,
-  //       );
-  //     },
-  //   );
-  //
-  //   if (picked != null) {
-  //     context.read<SignUpBloc>().add(
-  //           BirthDateChangeEvent(
-  //             birthdate: picked.formatToString(),
-  //           ),
-  //         );
-  //
-  //     context.read<SignUpBloc>().add(
-  //           SignUpValidateAgeEvent(
-  //             isValidAge: InputValidators.age(picked),
-  //           ),
-  //         );
-  //     _selectedDate = picked;
-  //     _birthDateController.text = picked.formatToString(format: 'MM/dd/yyyy');
-  //   }
-  // }
 }

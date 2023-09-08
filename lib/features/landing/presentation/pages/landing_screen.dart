@@ -32,9 +32,9 @@ class _LandingScreenState extends State<LandingScreen> {
       body: BlocConsumer<LandingBloc, LandingState>(listener: (context, state) {
         if (state.landingStatus == LandingStatus.initial) {
           context.read<LandingBloc>().add(CountDown());
-        } else if (state.landingStatus == LandingStatus.navigate) {
+        } else {
           if (state.token == null) {
-            context.goNamed(Routes.introduction);
+            context.goNamed(Routes.signIn);
           } else {
             context.goNamed(Routes.home);
           }
@@ -47,9 +47,7 @@ class _LandingScreenState extends State<LandingScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              SizedBox(
-                  width: 150,
-                  child: Image.asset(AppAssets.appLogo)),
+              SizedBox(width: 150, child: Image.asset(AppAssets.appLogo)),
             ],
           ),
         );

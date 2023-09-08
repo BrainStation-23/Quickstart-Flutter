@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qs_flutter/core/base/widgets/app_primary_button.dart';
 import 'package:qs_flutter/core/base/widgets/app_spacer.dart';
+import 'package:qs_flutter/core/base/widgets/base_setting_row.dart';
 import 'package:qs_flutter/core/validators/input_validators.dart';
 import 'package:qs_flutter/core/values/app_assets_path.dart';
 
@@ -42,9 +43,7 @@ class _SignInScreenState extends State<SignInScreen> {
             SnackBarMessageType.success);
         context.goNamed(Routes.home);
       } else if (state.status == SignInStatus.failure) {
-        showSnackBarMessage(
-            context,
-            _appLocalizations?.loginFailedMessage ?? "",
+        showSnackBarMessage(context, _appLocalizations?.failedMessage ?? "",
             SnackBarMessageType.failure);
       }
     }, builder: (context, state) {
@@ -53,30 +52,38 @@ class _SignInScreenState extends State<SignInScreen> {
           child: SingleChildScrollView(
             child: SizedBox(
               height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
               child: Padding(
                 padding: const EdgeInsets.all(AppValues.padding),
                 child: Form(
                   key: formKey,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      _buildAppHeader(),
-                      const AppSpacer(),
-                      _buildEmailTextField(state),
-                      _buildPasswordTextField(state),
-                      const AppSpacer(),
-                      _buildSignInButton(),
-                      const AppSpacer(
-                        height: AppValues.height_16,
+                      const ChangeSetting(),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          _buildAppHeader(),
+                          const AppSpacer(),
+                          _buildEmailTextField(state),
+                          _buildPasswordTextField(state),
+                          const AppSpacer(),
+                          _buildSignInButton(state),
+                          const AppSpacer(
+                            height: AppValues.height_16,
+                          ),
+                          _buildSignInWith(context),
+                          const AppSpacer(
+                            height: AppValues.height_16,
+                          ),
+                          _buildSocialLogIn(context),
+                          _buildDontHaveAccount()
+                        ],
                       ),
-                      _buildSignInWith(context),
-                      const AppSpacer(
-                        height: AppValues.height_16,
-                      ),
-                      _buildSocialLogIn(context),
-                      _buildDontHaveAccount()
                     ],
                   ),
                 ),
@@ -110,7 +117,7 @@ class _SignInScreenState extends State<SignInScreen> {
             onPressed: () {},
           ),
           const AppSpacer(
-            width: 8,
+            width: AppValues.padding,
           ),
           IconButton(
             icon: SvgPicture.asset(AppAssets.facebookSVG),
@@ -121,10 +128,12 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Widget _buildSignInButton() {
-    return AppPrimaryButton(
+  Widget _buildSignInButton(SignInState state) {
+    return state.status == SignInStatus.loading?CircularProgressIndicator():AppPrimaryButton(
         onPressed: () {
-          if (formKey.currentState!.validate()) {}
+          if (formKey.currentState!.validate()) {
+            context.read<SignInBloc>().add(SignInSubmitted());
+          }
         },
         title: _appLocalizations?.logIn ?? "");
   }
@@ -140,7 +149,8 @@ class _SignInScreenState extends State<SignInScreen> {
         TextButton(
             onPressed: () {
               context.goNamed(Routes.signUp);
-            }, child: Text(_appLocalizations?.signUp ?? ""))
+            },
+            child: Text(_appLocalizations?.signUp ?? ""))
       ],
     );
   }
@@ -157,8 +167,9 @@ class _SignInScreenState extends State<SignInScreen> {
             child: Divider(),
           ),
           Flexible(
-            flex: 1,
-            child: Text(_appLocalizations?.orSignInWith ?? ""),
+            flex: 3,
+            child:
+                FittedBox(child: Text(_appLocalizations?.orSignInWith ?? "")),
           ),
           const Flexible(
             flex: 1,
@@ -192,7 +203,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   .read<SignInBloc>()
                   .add(PasswordChangeEvent(password: value.toString()));
             },
-            validator: InputValidators.password,
+            // validator: InputValidators.password,
             obscureText: true),
       ),
     );

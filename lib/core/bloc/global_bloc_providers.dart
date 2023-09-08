@@ -12,8 +12,5 @@ class GlobalBlocProviders {
     BlocProvider(create: (_) => di.sl<LandingBloc>()),
     BlocProvider(create: (_) => di.sl<SignUpBloc>()),
     BlocProvider(create: (_) => di.sl<SignInBloc>()),
-
-
-
   ];
 }

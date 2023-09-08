@@ -8,6 +8,7 @@ import 'package:qs_flutter/core/utils/utils.dart';
 
 import '../../../../core/base/widgets/app_primary_button.dart';
 import '../../../../core/base/widgets/app_textfield.dart';
+import '../../../../core/routes/routes.dart';
 import '../../../../core/validators/input_validators.dart';
 import '../../../../core/values/app_assets_path.dart';
 import '../../../../core/values/app_colors.dart';
@@ -51,6 +52,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           } else if (state.status == SignUpStatus.verify_otp) {
             showSnackBarMessage(
                 context, state.responseMessage, SnackBarMessageType.success);
+            context.goNamed(Routes.verifyOtp);
+
           }
         },
         builder: (context, state) {
@@ -330,18 +333,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           )
         : AppPrimaryButton(
             onPressed: () => {
-              _formKey.currentState?.validate(),
-              if (_birthDateController.text == "")
-                {
-                  context.read<SignUpBloc>().add(
-                        const SignUpValidateAgeEvent(
-                          isValidAge: false,
-                        ),
-                      )
-                }
-              else if (_formKey.currentState?.validate() != false &&
-                  state.isAgeValidate)
-                context.read<SignUpBloc>().add(SignUpSubmitted())
+               if (_formKey.currentState!.validate()){
+                 context.read<SignUpBloc>().add(SignUpSubmitted())
+               }
             },
             title: _appLocalizations?.signUp ?? "",
           );

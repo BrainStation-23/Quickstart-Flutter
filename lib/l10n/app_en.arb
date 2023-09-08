@@ -22,6 +22,8 @@
   "firstNameFormLabel": "Enter your first name",
   "lastNameFormTitle": "Last Name",
   "lastNameFormLabel": "Enter your last name",
-  "alreadyHaveAccount": "Already Have Account?"
-
+  "alreadyHaveAccount": "Already Have Account?",
+  "fieldLabelTextOTP": "Enter the OTP",
+  "verifyOTP": "Verify OTP",
+  "fieldTitleOTP": "OTP (One Time Password)"
 }

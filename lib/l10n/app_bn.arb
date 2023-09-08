@@ -21,6 +21,10 @@
   "firstNameFormLabel": "আপনার প্রথম নাম দিন",
   "lastNameFormTitle": "শেষ নাম",
   "lastNameFormLabel": "আপনার শেষ নাম দিন",
-  "alreadyHaveAccount": "ইতিমধ্যে অ্যাকাউন্ট আছে?"
+  "alreadyHaveAccount": "ইতিমধ্যে অ্যাকাউন্ট আছে?",
+  "fieldLabelTextOTP": "ওটিপি প্রদান করুন",
+  "verifyOTP": "ওটিপি যাচাই করুন",
+  "fieldTitleOTP": "ওটিপি (একবারে পাসওয়ার্ড)"
+
 
 }

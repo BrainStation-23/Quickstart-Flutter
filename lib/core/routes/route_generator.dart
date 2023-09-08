@@ -8,6 +8,8 @@ import 'package:qs_flutter/features/landing/presentation/pages/landing_screen.da
 import 'package:qs_flutter/features/sign_in/presentation/pages/sign_in_screen.dart';
 import 'package:qs_flutter/features/sign_up/presentation/pages/sign_up_screen.dart';
 
+import '../../features/sign_up/presentation/widgets/otp_verificaticion_widget.dart';
+
 class RouteGenerator {
   static final GoRouter router = GoRouter(
     errorBuilder: (context, state) {
@@ -35,6 +37,11 @@ class RouteGenerator {
             name: Routes.signUp,
             path: Routes.signUp,
             builder: (context, state) => SignUpScreen(),
+          ),
+          GoRoute(
+            name: Routes.verifyOtp,
+            path: Routes.verifyOtp,
+            builder: (context, state) => const OTPVerificationView(),
           ),
           GoRoute(
             name: Routes.introduction,

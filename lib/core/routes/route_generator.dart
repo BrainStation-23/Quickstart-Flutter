@@ -5,9 +5,8 @@ import 'package:qs_flutter/core/routes/routes.dart';
 import 'package:qs_flutter/features/home/presentation/pages/home.dart';
 import 'package:qs_flutter/features/introduction/presentation/pages/introduction_screen.dart';
 import 'package:qs_flutter/features/landing/presentation/pages/landing_screen.dart';
-import 'package:qs_flutter/features/profile/presentation/pages/profile.dart';
 import 'package:qs_flutter/features/sign_in/presentation/pages/sign_in_screen.dart';
-import 'package:qs_flutter/features/sign_up/presentation/pages/sign_up.dart';
+import 'package:qs_flutter/features/sign_up/presentation/pages/sign_up_screen.dart';
 
 class RouteGenerator {
   static final GoRouter router = GoRouter(
@@ -26,15 +25,16 @@ class RouteGenerator {
         path: "/${Routes.landing}",
         builder: (context, state) => const LandingScreen(),
       ),
+
       GoRoute(
         name: Routes.signIn,
         path:"/${Routes.signIn}" ,
-        builder: (context, state) => SignIn(),
+        builder: (context, state) => SignInScreen(),
         routes: [
           GoRoute(
             name: Routes.signUp,
             path: Routes.signUp,
-            builder: (context, state) => SignUp(),
+            builder: (context, state) => SignUpScreen(),
           ),
           GoRoute(
             name: Routes.introduction,
@@ -63,7 +63,7 @@ class RouteGenerator {
               GoRoute(
                 name: Routes.profile,
                 path: "/${Routes.profile}",
-                builder: (context, state) => const Profile(),
+                builder: (context, state) => const Introduction(),
               ),
             ],
           ),

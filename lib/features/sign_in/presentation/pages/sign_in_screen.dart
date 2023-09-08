@@ -1,61 +1,228 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:qs_flutter/core/base/widgets/AppTextField.dart';
-import 'package:qs_flutter/core/routes/routes.dart';
-import 'package:qs_flutter/core/validators/input_validators.dart';
-import 'package:qs_flutter/core/values/app_values.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:qs_flutter/core/base/widgets/app_primary_button.dart';
+import 'package:qs_flutter/core/base/widgets/app_spacer.dart';
+import 'package:qs_flutter/core/validators/input_validators.dart';
+import 'package:qs_flutter/core/values/app_assets_path.dart';
 
-class SignIn extends StatelessWidget {
+import '../../../../core/base/widgets/app_textfield.dart';
+import '../../../../core/routes/routes.dart';
+import '../../../../core/utils/utils.dart';
+import '../../../../core/values/app_values.dart';
+import '../bloc/sign_in_bloc.dart';
+
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
   late AppLocalizations? _appLocalizations;
-  late String? email;
-  late String? password;
+
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
-  SignIn({super.key, this.email, this.password});
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     _appLocalizations = AppLocalizations.of(context);
 
-    if (email != '' && password != '') {
-      _emailController.text = email ?? "";
-      _passwordController.text = password ?? "";
-    }
-
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(AppValues.padding),
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              AppTextField(
-                controller: _emailController,
-                labelText: "Email",
-                onChanged: (value) {},
+    return BlocConsumer<SignInBloc, SignInState>(listener: (context, state) {
+      if (state.status == SignInStatus.success) {
+        showSnackBarMessage(
+            context,
+            _appLocalizations?.loginSuccessMessage ?? "",
+            SnackBarMessageType.success);
+        context.goNamed(Routes.home);
+      } else if (state.status == SignInStatus.failure) {
+        showSnackBarMessage(
+            context,
+            _appLocalizations?.loginFailedMessage ?? "",
+            SnackBarMessageType.failure);
+      }
+    }, builder: (context, state) {
+      return Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: Padding(
+                padding: const EdgeInsets.all(AppValues.padding),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      _buildAppHeader(),
+                      const AppSpacer(),
+                      _buildEmailTextField(state),
+                      _buildPasswordTextField(state),
+                      const AppSpacer(),
+                      _buildSignInButton(),
+                      const AppSpacer(
+                        height: AppValues.height_16,
+                      ),
+                      _buildSignInWith(context),
+                      const AppSpacer(
+                        height: AppValues.height_16,
+                      ),
+                      _buildSocialLogIn(context),
+                      _buildDontHaveAccount()
+                    ],
+                  ),
+                ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              AppTextField(
-                  controller: _passwordController,
-                  labelText: "Password",
-                  onChanged: (value) {},
-                  obscureText: true),
-              const SizedBox(
-                height: 10,
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    context.goNamed(Routes.introduction);
-                  },
-                  child: Text(_appLocalizations?.submit ?? ""))
-            ],
+            ),
           ),
+        ),
+      );
+    });
+  }
+
+  Image _buildAppHeader() {
+    return Image.asset(
+      AppAssets.appLogo,
+      height: 120.0,
+      width: 120.0,
+      fit: BoxFit.scaleDown,
+    );
+  }
+
+  Widget _buildSocialLogIn(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            icon: SvgPicture.asset(AppAssets.googleSVG),
+            onPressed: () {},
+          ),
+          const AppSpacer(
+            width: 8,
+          ),
+          IconButton(
+            icon: SvgPicture.asset(AppAssets.facebookSVG),
+            onPressed: () {},
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSignInButton() {
+    return AppPrimaryButton(
+        onPressed: () {
+          if (formKey.currentState!.validate()) {}
+        },
+        title: _appLocalizations?.logIn ?? "");
+  }
+
+  Widget _buildDontHaveAccount() {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(_appLocalizations?.dontHaveAccount ?? ""),
+        const AppSpacer(width: AppValues.halfPadding),
+        TextButton(
+            onPressed: () {
+              context.goNamed(Routes.signUp);
+            }, child: Text(_appLocalizations?.signUp ?? ""))
+      ],
+    );
+  }
+
+  Widget _buildSignInWith(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Flexible(
+            flex: 1,
+            child: Divider(),
+          ),
+          Flexible(
+            flex: 1,
+            child: Text(_appLocalizations?.orSignInWith ?? ""),
+          ),
+          const Flexible(
+            flex: 1,
+            child: Divider(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPasswordTextField(SignInState state) {
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      title: Padding(
+        padding: const EdgeInsets.only(left: AppValues.margin_2),
+        child: Text(
+          _appLocalizations?.fieldTitlePassword ?? "",
+        ),
+      ),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(
+          top: AppValues.smallMargin,
+        ),
+        child: AppTextField(
+            isEnabled: state.status != SignInStatus.loading,
+            prefix: const Icon(Icons.password_outlined),
+            controller: _passwordController,
+            labelText: _appLocalizations?.fieldLabelTextPassword ?? "",
+            onChanged: (value) {
+              context
+                  .read<SignInBloc>()
+                  .add(PasswordChangeEvent(password: value.toString()));
+            },
+            validator: InputValidators.password,
+            obscureText: true),
+      ),
+    );
+  }
+
+  //
+  Widget _buildEmailTextField(SignInState state) {
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      title: Padding(
+        padding: const EdgeInsets.only(
+          left: AppValues.margin_2,
+        ),
+        child: Text(
+          _appLocalizations?.fieldTitleEmail ?? "",
+        ),
+      ),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(top: AppValues.smallMargin),
+        child: AppTextField(
+          isEnabled: state.status != SignInStatus.loading,
+          prefix: const Icon(Icons.email_outlined),
+          controller: _emailController,
+          labelText: _appLocalizations?.fieldLabelTextEmail ?? "",
+          validator: InputValidators.email,
+          onChanged: (value) {
+            context
+                .read<SignInBloc>()
+                .add(EmailChangeEvent(email: value.toString()));
+          },
         ),
       ),
     );

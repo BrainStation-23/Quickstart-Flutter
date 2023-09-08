@@ -42,4 +42,6 @@ flutter:
   assets:
 #    - .env
     - lib/features/landing/presentation/assets/image/
+    - lib/features/sign_in/presentation/assets/svg/
+    - lib/features/sign_in/presentation/assets/image/
 

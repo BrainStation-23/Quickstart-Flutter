@@ -66,7 +66,7 @@ class _IntroductionState extends State<Introduction> {
             child: ElevatedButton(
               onPressed: () {
                 if (currentIndex == _pageCount - 1) {
-                  context.goNamed(Routes.home);
+                  context.goNamed(Routes.signIn);
                 }
                 _pageController.nextPage(
                   duration: const Duration(milliseconds: 100),

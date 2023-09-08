@@ -6,5 +6,18 @@
   "emailLabel": "ইমেইল",
   "passwordLabel": "পাসওয়ার্ড",
   "usernameLabel": "ইউজারনেম",
-  "submit": "সাবমিট"
+  "submit": "সাবমিট",
+  "fieldTitleEmail": "Email Address",
+  "fieldLabelTextEmail": "Enter your Email",
+  "fieldLabelTextPassword": "Enter your password",
+  "fieldTitlePassword": "Password",
+  "loginSuccessMessage":"Successfully Loged In",
+  "loginFailedMessage":"Something is wrong",
+  "orSignInWith":"Or Sign in with",
+  "orCreateAccountWith":"Or Create Account with",
+  "dontHaveAccount": "Don't have an account?",
+  "firstNameFormTitle": "First Name",
+  "firstNameFormLabel": "Enter your first name",
+  "lastNameFormTitle": "Last Name",
+  "lastNameFormLabel": "Enter your last name"
 }

@@ -34,7 +34,7 @@ class _LandingScreenState extends State<LandingScreen> {
           context.read<LandingBloc>().add(CountDown());
         } else if (state.landingStatus == LandingStatus.navigate) {
           if (state.token == null) {
-            context.goNamed(Routes.signIn);
+            context.goNamed(Routes.introduction);
           } else {
             context.goNamed(Routes.home);
           }

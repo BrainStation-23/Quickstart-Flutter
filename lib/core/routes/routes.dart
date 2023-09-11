@@ -6,4 +6,5 @@ class Routes {
   static const String profile = 'profile';
   static const String introduction = 'introduction';
   static const String verifyOtp = 'verify_otp';
+  static const String settings = 'settings';
 }

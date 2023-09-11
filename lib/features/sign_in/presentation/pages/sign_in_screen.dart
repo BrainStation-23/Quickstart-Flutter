@@ -49,41 +49,33 @@ class _SignInScreenState extends State<SignInScreen> {
     }, builder: (context, state) {
       return Scaffold(
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
+          child: Center(
+            child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(AppValues.padding),
+                padding: const EdgeInsets.all(8.0),
                 child: Form(
                   key: formKey,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const ChangeSetting(),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          _buildAppHeader(),
-                          const AppSpacer(),
-                          _buildEmailTextField(state),
-                          _buildPasswordTextField(state),
-                          const AppSpacer(),
-                          _buildSignInButton(state),
-                          const AppSpacer(
-                            height: AppValues.height_16,
-                          ),
-                          _buildSignInWith(context),
-                          const AppSpacer(
-                            height: AppValues.height_16,
-                          ),
-                          _buildSocialLogIn(context),
-                          _buildDontHaveAccount()
-                        ],
+                      const AppSpacer(),
+                      _buildAppHeader(),
+                      const AppSpacer(),
+                      _buildEmailTextField(state),
+                      _buildPasswordTextField(state),
+                      const AppSpacer(),
+                      _buildSignInButton(state),
+                      const AppSpacer(
+                        height: AppValues.height_16,
                       ),
+                      _buildSignInWith(context),
+                      const AppSpacer(
+                        height: AppValues.height_16,
+                      ),
+                      _buildSocialLogIn(context),
+                      _buildDontHaveAccount(),
                     ],
                   ),
                 ),
@@ -100,7 +92,6 @@ class _SignInScreenState extends State<SignInScreen> {
       AppAssets.appLogo,
       height: 120.0,
       width: 120.0,
-      fit: BoxFit.scaleDown,
     );
   }
 
@@ -129,7 +120,7 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Widget _buildSignInButton(SignInState state) {
-    return state.status == SignInStatus.loading?CircularProgressIndicator():AppPrimaryButton(
+    return state.status == SignInStatus.loading?const CircularProgressIndicator():AppPrimaryButton(
         onPressed: () {
           if (formKey.currentState!.validate()) {
             context.read<SignInBloc>().add(SignInSubmitted());

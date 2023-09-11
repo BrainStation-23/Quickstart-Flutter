@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class ScaffoldWithNestedNavigation extends StatelessWidget {
-  const ScaffoldWithNestedNavigation({
+  late AppLocalizations? _appLocalizations;
+
+   ScaffoldWithNestedNavigation({
     Key? key,
     required this.navigationShell,
   }) : super(key: key ?? const ValueKey('ScaffoldWithNestedNavigation'));
@@ -17,14 +21,17 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _appLocalizations = AppLocalizations.of(context);
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
-        destinations: const [
-          NavigationDestination(label: 'Home', icon: Icon(Icons.home)),
+        destinations:  [
+          NavigationDestination(label: _appLocalizations?.home??"", icon: Icon(Icons.home)),
           NavigationDestination(
-              label: 'Profile', icon: Icon(Icons.person_rounded)),
+              label: _appLocalizations?.profile??"", icon: Icon(Icons.person_rounded)),
+          NavigationDestination(
+              label: _appLocalizations?.setting??"", icon: Icon(Icons.settings)),
         ],
         onDestinationSelected: _goBranch,
       ),

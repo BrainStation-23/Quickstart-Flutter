@@ -6,6 +6,9 @@
   "emailLabel": "Email",
   "phoneLabel": "Phone Number",
   "passwordLabel": "Password",
+  "home": "Home",
+  "profile": "Profile",
+  "setting": "Setting",
   "usernameLabel": "Username",
   "submit": "Submit",
   "fieldTitleEmail": "Email Address",
@@ -25,5 +28,12 @@
   "alreadyHaveAccount": "Already Have Account?",
   "fieldLabelTextOTP": "Enter the OTP",
   "verifyOTP": "Verify OTP",
-  "fieldTitleOTP": "OTP (One Time Password)"
+  "fieldTitleOTP": "OTP (One Time Password)",
+  "changeTheme": "Change Theme",
+  "changeLanguage": "Change Language",
+  "savedCard": "Saved Card",
+  "privacyPolicy": "Privacy Policy",
+  "termsAndConditions": "Terms & Conditions",
+  "aboutUs": "About Us",
+  "logOut": "Logout"
 }

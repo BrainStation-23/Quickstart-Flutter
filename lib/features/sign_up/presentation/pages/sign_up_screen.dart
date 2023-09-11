@@ -53,26 +53,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
             showSnackBarMessage(
                 context, state.responseMessage, SnackBarMessageType.success);
             context.goNamed(Routes.verifyOtp);
-
           }
         },
         builder: (context, state) {
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: AppValues.padding,
-                horizontal: AppValues.padding,
-              ),
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
+          return SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
                 child: Form(
                   key: _formKey,
-                  child: SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         _buildAppHeader(),
                         const SizedBox(
@@ -113,7 +106,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           height: AppValues.halfPadding,
                         ),
                         _buildSocialLogIn(context),
-                        _buildFooter(context)
+                        _buildFooter(context),
                       ],
                     ),
                   ),
@@ -139,7 +132,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           Flexible(
             flex: 3,
-            child: FittedBox(child: Text(_appLocalizations?.orCreateAccountWith ?? "")),
+            child: FittedBox(
+                child: Text(_appLocalizations?.orCreateAccountWith ?? "")),
           ),
           const Flexible(
             flex: 1,
@@ -333,9 +327,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           )
         : AppPrimaryButton(
             onPressed: () => {
-               if (_formKey.currentState!.validate()){
-                 context.read<SignUpBloc>().add(SignUpSubmitted())
-               }
+              if (_formKey.currentState!.validate())
+                {context.read<SignUpBloc>().add(SignUpSubmitted())}
             },
             title: _appLocalizations?.signUp ?? "",
           );

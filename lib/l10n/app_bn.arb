@@ -5,6 +5,9 @@
   "emailLabel": "ইমেইল",
   "phoneLabel": "ফোন নম্বর",
   "passwordLabel": "পাসওয়ার্ড",
+  "home": "হোম",
+  "profile": "প্রোফাইল",
+  "setting": "সেটিং",
   "usernameLabel": "ব্যবহারকারীর নাম",
   "submit": "জমা দিন",
   "fieldTitleEmail": "ইমেইল ঠিকানা",
@@ -24,7 +27,16 @@
   "alreadyHaveAccount": "ইতিমধ্যে অ্যাকাউন্ট আছে?",
   "fieldLabelTextOTP": "ওটিপি প্রদান করুন",
   "verifyOTP": "ওটিপি যাচাই করুন",
-  "fieldTitleOTP": "ওটিপি (একবারে পাসওয়ার্ড)"
+  "fieldTitleOTP": "ওটিপি (একবারে পাসওয়ার্ড)",
+  "changeTheme": "থিম পরিবর্তন করুন",
+  "changeLanguage": "ভাষা পরিবর্তন করুন",
+  "savedCard": "সংরক্ষিত কার্ড",
+  "privacyPolicy": "গোপনীয়তা নীতি",
+  "termsAndConditions": "শর্তাদি এবং নির্দিষ্টি",
+  "aboutUs": "আমাদের সম্পর্কে",
+  "logOut": "লগ আউট"
+
+
 
 
 }

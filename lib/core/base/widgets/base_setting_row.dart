@@ -1,10 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qs_flutter/core/values/app_colors.dart';
 
 import '../../values/app_values.dart';
 import '../blocs/base_bloc.dart';
 import '../blocs/base_event.dart';
 import '../blocs/base_state.dart';
+
 class ChangeSetting extends StatelessWidget {
   const ChangeSetting({super.key});
 
@@ -20,11 +23,14 @@ class ChangeSetting extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: AppValues.halfPadding),
             child: Text("বাংলা"),
           ),
-          Switch(
+          CupertinoSwitch(
               value: state.locale == const Locale('en'),
+              applyTheme: true,
+              trackColor: AppColors.colorPrimary,
+              autofocus: true,
               onChanged: (v) {
-                context.read<BaseBloc>().add(
-                    ChangeLanguageEvent(locale: Locale(v == true ? 'en' : 'bn')));
+                context.read<BaseBloc>().add(ChangeLanguageEvent(
+                    locale: Locale(v == true ? 'en' : 'bn')));
               }),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: AppValues.halfPadding),
@@ -38,12 +44,19 @@ class ChangeSetting extends StatelessWidget {
                         : ThemeMode.dark));
               },
               icon: state.themeMode == ThemeMode.dark
-                  ? const Icon(Icons.light_mode_outlined)
-                  : const Icon(Icons.dark_mode))
+                  ? const CircleAvatar(
+                      child: Icon(
+                      Icons.light_mode_outlined,
+
+                    ))
+                  : const CircleAvatar(
+                    child: Icon(
+                        Icons.dark_mode,
+
+                      ),
+                  ))
         ],
       );
     });
   }
 }
-
-

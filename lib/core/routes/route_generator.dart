@@ -2,7 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:qs_flutter/core/routes/error_screen.dart';
 import 'package:qs_flutter/core/routes/navbar.dart';
 import 'package:qs_flutter/core/routes/routes.dart';
-import 'package:qs_flutter/features/home/presentation/pages/home.dart';
+import 'package:qs_flutter/features/home/presentation/pages/home_screen.dart';
 import 'package:qs_flutter/features/introduction/presentation/pages/introduction_screen.dart';
 import 'package:qs_flutter/features/landing/presentation/pages/landing_screen.dart';
 import 'package:qs_flutter/features/settings/presentation/pages/settings_screen.dart';
@@ -28,30 +28,27 @@ class RouteGenerator {
         path: "/${Routes.landing}",
         builder: (context, state) => const LandingScreen(),
       ),
-
       GoRoute(
-        name: Routes.signIn,
-        path:"/${Routes.signIn}" ,
-        builder: (context, state) => const SignInScreen(),
-        routes: [
-          GoRoute(
-            name: Routes.signUp,
-            path: Routes.signUp,
-            builder: (context, state) => const SignUpScreen(),
-          ),
-          GoRoute(
-            name: Routes.verifyOtp,
-            path: Routes.verifyOtp,
-            builder: (context, state) => const OTPVerificationView(),
-          ),
-          GoRoute(
-            name: Routes.introduction,
-            path: Routes.introduction,
-            builder: (context, state) => const Introduction(),
-          ),
-        ]
-      ),
-
+          name: Routes.signIn,
+          path: "/${Routes.signIn}",
+          builder: (context, state) => const SignInScreen(),
+          routes: [
+            GoRoute(
+              name: Routes.signUp,
+              path: Routes.signUp,
+              builder: (context, state) => const SignUpScreen(),
+            ),
+            GoRoute(
+              name: Routes.verifyOtp,
+              path: Routes.verifyOtp,
+              builder: (context, state) => const OTPVerificationView(),
+            ),
+            GoRoute(
+              name: Routes.introduction,
+              path: Routes.introduction,
+              builder: (context, state) => const Introduction(),
+            ),
+          ]),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return ScaffoldWithNestedNavigation(navigationShell: navigationShell);
@@ -80,7 +77,7 @@ class RouteGenerator {
               GoRoute(
                 name: Routes.settings,
                 path: "/${Routes.settings}",
-                builder: (context, state) =>  SettingsScreen(),
+                builder: (context, state) => SettingsScreen(),
               ),
             ],
           ),

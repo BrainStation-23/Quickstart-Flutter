@@ -59,7 +59,7 @@ class RouteGenerator {
               GoRoute(
                 name: Routes.home,
                 path: "/${Routes.home}",
-                builder: (context, state) => const Home(),
+                builder: (context, state) =>  Home(),
               ),
             ],
           ),
@@ -68,7 +68,7 @@ class RouteGenerator {
               GoRoute(
                 name: Routes.profile,
                 path: "/${Routes.profile}",
-                builder: (context, state) => const Introduction(),
+                builder: (context, state) => const SignInScreen(),
               ),
             ],
           ),

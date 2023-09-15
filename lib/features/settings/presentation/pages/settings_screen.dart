@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qs_flutter/core/base/blocs/base_bloc.dart';
 import 'package:qs_flutter/core/base/blocs/base_event.dart';
 import 'package:qs_flutter/core/base/blocs/base_state.dart';
 import 'package:qs_flutter/core/base/widgets/base_markdown.dart';
 import 'package:qs_flutter/core/values/text_styles.dart';
+
+import '../../../../core/routes/routes.dart';
+import '../../../../core/services/local_storage/cache_service.dart';
 
 class SettingsScreen extends StatelessWidget {
   SettingsScreen({super.key});
@@ -71,7 +75,10 @@ class SettingsScreen extends StatelessWidget {
                 _buildItem(
                     title: _appLocalizations?.logOut ?? "",
                     icon: Icons.output_sharp,
-                    onClick: () {}),
+                    onClick: () async{
+                      await CacheService.instance.clearToken();
+                      context.goNamed(Routes.signIn);
+                    }),
               ],
             ),
           ),

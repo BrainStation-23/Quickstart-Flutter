@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qs_flutter/core/di/injection_container.dart' as di;
+import 'package:qs_flutter/features/forgot_password/presentation/bloc/forgot_password_bloc.dart';
 import 'package:qs_flutter/features/landing/presentation/blocs/landing_bloc.dart';
 
 import '../../features/sign_in/presentation/bloc/sign_in_bloc.dart';
@@ -12,5 +13,6 @@ class GlobalBlocProviders {
     BlocProvider(create: (_) => di.sl<LandingBloc>()),
     BlocProvider(create: (_) => di.sl<SignUpBloc>()),
     BlocProvider(create: (_) => di.sl<SignInBloc>()),
+    BlocProvider(create: (_) => di.sl<ForgotPasswordBloc>()),
   ];
 }

@@ -1,6 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:qs_flutter/core/base/blocs/base_bloc.dart';
 import 'package:qs_flutter/core/base/blocs/base_state.dart';
+import 'package:qs_flutter/features/forgot_password/presentation/bloc/forgot_password_bloc.dart';
+import 'package:qs_flutter/features/forgot_password/presentation/bloc/forgot_password_state.dart';
 import 'package:qs_flutter/features/landing/presentation/blocs/landing_bloc.dart';
 import 'package:qs_flutter/features/sign_up/domain/use_cases/otp_verification_usecase.dart';
 

@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:qs_flutter/core/routes/error_screen.dart';
 import 'package:qs_flutter/core/routes/navbar.dart';
 import 'package:qs_flutter/core/routes/routes.dart';
+import 'package:qs_flutter/features/forgot_password/presentation/pages/password_recovery_screen.dart';
 import 'package:qs_flutter/features/home/presentation/pages/home_screen.dart';
 import 'package:qs_flutter/features/introduction/presentation/pages/introduction_screen.dart';
 import 'package:qs_flutter/features/landing/presentation/pages/landing_screen.dart';
@@ -27,6 +28,11 @@ class RouteGenerator {
         name: Routes.landing,
         path: "/${Routes.landing}",
         builder: (context, state) => const LandingScreen(),
+      ),
+      GoRoute(
+        name: Routes.forgotPassword,
+        path: "/${Routes.forgotPassword}",
+        builder: (context, state) => const PasswordRecoveryScreen(),
       ),
       GoRoute(
           name: Routes.signIn,
@@ -68,7 +74,7 @@ class RouteGenerator {
               GoRoute(
                 name: Routes.profile,
                 path: "/${Routes.profile}",
-                builder: (context, state) => const SignInScreen(),
+                builder: (context, state) => const PasswordRecoveryScreen(),
               ),
             ],
           ),

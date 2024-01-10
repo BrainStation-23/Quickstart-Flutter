@@ -1,17 +1,21 @@
+import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 import '../core/values/app_values.dart';
 
-
 class EnvConfig {
   final String appName;
   final String baseUrl;
+  final Locale locale;
+  final ThemeMode themeMode;
 
   late final Logger logger;
 
   EnvConfig({
     required this.appName,
     required this.baseUrl,
+    required this.themeMode,
+    required this.locale,
   }) {
     logger = Logger(
       printer: PrettyPrinter(

@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -50,6 +51,7 @@ class RestClient {
     _setDioInterceptorList();
 
     final standardHeaders = await _getOptions(apiType);
+
     if (headers != null) {
       standardHeaders.headers?.addAll(headers);
     }
@@ -76,6 +78,7 @@ class RestClient {
     _setDioInterceptorList();
 
     final standardHeaders = await _getOptions(apiType);
+
     standardHeaders.headers?.addAll({
       'Content-Type': 'multipart/form-data',
     });
@@ -150,6 +153,7 @@ class RestClient {
     _setDioInterceptorList();
 
     final standardHeaders = await _getOptions(apiType);
+
     if (headers != null) {
       standardHeaders.headers?.addAll(headers);
     }
@@ -176,6 +180,7 @@ class RestClient {
     _setDioInterceptorList();
 
     final standardHeaders = await _getOptions(apiType);
+
     if (headers != null) {
       standardHeaders.headers?.addAll({
         'Content-Type': 'multipart/form-data',
@@ -228,10 +233,10 @@ class RestClient {
 
     switch (error.type) {
       case DioErrorType.cancel:
-        throw RequestCancelledException(
-          001,
-          AppStrings.defaultErrorMessage,
-        );
+        throw RequestCancelledException(ErrorModel(
+          statusCode: 001,
+          message: AppStrings.defaultErrorMessage,
+        ));
       case DioErrorType.connectTimeout:
         throw RequestTimeoutException(ErrorModel(
           message: AppStrings.defaultErrorMessage,
@@ -243,10 +248,10 @@ class RestClient {
           ),
         );
       case DioErrorType.receiveTimeout:
-        throw ReceiveTimeoutException(
-          004,
-          AppStrings.couldNotConnectToServer,
-        );
+        throw ReceiveTimeoutException(ErrorModel(
+          statusCode: 004,
+          message: AppStrings.couldNotConnectToServer,
+        ));
       case DioErrorType.sendTimeout:
         throw RequestTimeoutException(
           ErrorModel(
@@ -255,7 +260,8 @@ class RestClient {
           ),
         );
       case DioErrorType.response:
-        ErrorModel errorModel = ErrorModel.fromJson(error.response!.data);
+        ErrorModel errorModel =
+            ErrorModel.fromJson(error.response!.data['error']);
 
         _networkException(
           errorModel,
@@ -274,7 +280,7 @@ class RestClient {
   }) {
     switch (statusCode) {
       case 400:
-        throw NetworkException(400, errorModel?.message, "");
+        throw NetworkException(400, message);
 
       case 403:
         throw UnauthorisedException(403, message);
@@ -305,6 +311,8 @@ class RestClient {
     if (kDebugMode) {
       interceptorList.add(PrettyDioLogger());
     }
+    // caching mechanism interceptor will check later
+    // interceptorList.add(ApiCachingInterceptor());
     _dio.interceptors.addAll(interceptorList);
   }
 
@@ -336,7 +344,7 @@ class PublicApiOptions extends ApiOptions {
     super.options.headers = <String, dynamic>{
       'Accept': 'application/json',
       'Content-type': 'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/json'
     };
   }
 }
@@ -346,7 +354,7 @@ class ProtectedApiOptions extends ApiOptions {
     super.options.headers = <String, dynamic>{
       'Accept': 'application/json',
       'Content-type': 'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
       'Authorization': 'Bearer $apiToken',
     };
   }

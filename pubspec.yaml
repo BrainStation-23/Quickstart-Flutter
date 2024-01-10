@@ -1,17 +1,16 @@
 name: qs_flutter
 description: A new Flutter project.
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.6 <4.0.0'
+  sdk: ">=3.0.6 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-
 
   cupertino_icons: ^1.0.2
   dartz: 0.10.1
@@ -25,6 +24,10 @@ dependencies:
   shared_preferences: 2.2.0
   flutter_svg: 2.0.7
   intl: ^0.18.0
+  go_router: ^10.0.0
+  url_launcher: ^6.1.14
+  flutter_markdown: ^0.6.17+2
+  carousel_slider: ^4.2.1
 
 
 dev_dependencies:
@@ -40,4 +43,9 @@ flutter:
   generate: true
   uses-material-design: true
 
+  assets:
+#    - .env
+    - lib/features/landing/presentation/assets/image/
+    - lib/features/sign_in/presentation/assets/svg/
+    - lib/features/sign_in/presentation/assets/image/
 

@@ -1,20 +1,26 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qs_flutter/core/services/local_storage/cache_service.dart';
 
 import 'base_event.dart';
 import 'base_state.dart';
 
-class BaseBloc<E extends BaseEvent, S extends BaseState> extends Bloc<E, S> {
+class BaseBloc extends Bloc<BaseEvent, BaseState> {
   BaseBloc(super.initialState) {
-    on<E>(_changeState);
+    on<ChangeThemeEvent>(_changeThemeState);
+    on<ChangeLanguageEvent>(_changeLanguageState);
   }
 
-  FutureOr<void> _changeState(BaseEvent event, Emitter<BaseState> emit) {
-    if (event is ChangeThemeEvent) {
-      emit((state.copyWith(themeMode: event.themeMode)));
-    } else if (event is ChangeLanguageEvent) {
-      emit((state.copyWith(locale: event.locale)));
-    }
+
+  FutureOr<void> _changeThemeState(ChangeThemeEvent event, Emitter<BaseState> emit) {
+    emit((state.copyWith(themeMode: event.themeMode)));
+    CacheService.instance.changeTheme(event.themeMode??ThemeMode.light);
+  }
+
+  FutureOr<void> _changeLanguageState(ChangeLanguageEvent event, Emitter<BaseState> emit) {
+    emit((state.copyWith(locale: event.locale)));
+    CacheService.instance.changeLanguage(event.locale == const Locale('en')?'en':'bn');
   }
 }

@@ -1,3 +1,7 @@
+import 'package:flutter/cupertino.dart';
+
+import '../app_context.dart';
+
 abstract class AppValues {
   static const double padding = 16;
   static const double padding_zero = 0;
@@ -96,4 +100,11 @@ abstract class AppValues {
   static const int defaultThrottleTimeInMilliSeconds = 500;
 
   static const double height_16 = 16;
+
+
+  static const double app_text_field_border = 8;
+
+  static double appHeight = MediaQuery.of(AppContext.context).size.height;
+  static double appWidth = MediaQuery.of(AppContext.context).size.width;
+
 }

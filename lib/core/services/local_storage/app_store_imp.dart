@@ -1,3 +1,4 @@
+import 'package:flutter/src/material/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_store.dart';
@@ -11,6 +12,8 @@ class AppStorageImp extends AppStorageI {
   static const String _keyUserEmail = 'user_email';
   static const String _keyPassword = 'password';
   static const String _keyFcmToken = 'fcm-token';
+  static const String _keyTheme = 'theme';
+  static const String _keyLanguage = 'language';
 
   @override
   Future<void> storeBearerToken(String token) async {
@@ -72,5 +75,29 @@ class AppStorageImp extends AppStorageI {
   Future<String?> retrieveFcmToken() async {
     SharedPreferences prefs = await getPrefs();
     return prefs.getString(_keyFcmToken);
+  }
+
+  @override
+  Future<void> changeLanguage(String languageType) async {
+    SharedPreferences prefs = await getPrefs();
+    prefs.setString(_keyLanguage, languageType);
+  }
+
+  @override
+  Future<void> changeTheme(ThemeMode themeMode) async {
+    SharedPreferences prefs = await getPrefs();
+    prefs.setString(_keyTheme, themeMode.name);
+  }
+
+  @override
+  Future<String?> retrieveLanguage() async {
+    SharedPreferences prefs = await getPrefs();
+    return prefs.getString(_keyLanguage);
+  }
+
+  @override
+  Future<String?> retrieveTheme() async {
+    SharedPreferences prefs = await getPrefs();
+    return prefs.getString(_keyTheme);
   }
 }

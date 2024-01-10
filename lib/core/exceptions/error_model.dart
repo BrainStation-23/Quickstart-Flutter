@@ -26,14 +26,14 @@ class ErrorModel {
   int? statusCode;
 
   factory ErrorModel.fromJson(Map<String, dynamic> json) => ErrorModel(
-        message: json["message"],
-        statusCode: json["statusCode"],
-      );
+    message: json["message"],
+    statusCode: int.tryParse(json["code"]),
+  );
 
   Map<String, dynamic> toJson() => {
-        "message": message,
-        "code": statusCode,
-      };
+    "message": message,
+    "code": statusCode,
+  };
 
   @override
   String toString() {

@@ -77,7 +77,26 @@ To start using this boilerplate template, follow these steps:
 4. **Build Your App:**
    Leverage the provided features and architecture to build your Flutter app efficiently. Utilize
    the state management, localization, error handling, network calls, local storage, and dependency
-   injection features to deliver a high-quality and user-friendly application.
+   injection features to deliver a high-quality and user-friendly application.\
+
+## TODO List
+
+- [x] Initialize the project
+- [x] Set up the version control system (Git)
+- [x] Create the project structure
+- [ ] Implement feature A
+   - [ ] Subtask 1
+   - [ ] Subtask 2
+- [ ] Implement feature B
+- [ ] Fix bug #1
+- [ ] Write unit tests
+- [ ] Add documentation
+   - [ ] Update README.md
+   - [ ] Generate API documentation
+- [ ] Conduct code review
+- [ ] Address feedback from code review
+- [ ] Perform integration testing
+- [ ] Release version 1.0.0
 
 ## Contribution
 

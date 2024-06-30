@@ -1,16 +1,16 @@
 part of api_base;
 
-abstract class ApiErrorResponse<TEntity> extends ApiResponse<TEntity> {
-  String? httpStatusCode;
-  String? httpStatusMessage;
+class ApiErrorResponse extends ApiResponse {
+  int? statusCode;
+  String? message;
 
   ApiErrorResponse(
-    this.httpStatusCode,
-    this.httpStatusMessage,
+    this.statusCode,
+    this.message,
   );
 
-  void setProperties({String? code, String? message}){
-    httpStatusCode = code;
-    httpStatusMessage = message;
+  void setProperties({int? code, String? msg}){
+    statusCode = code;
+    message = msg;
   }
 }

@@ -1,7 +1,6 @@
 part of api_base;
 
-abstract class ApiResponse<TEntity> {
+abstract class ApiResponse {
   const ApiResponse();
 
-  TEntity toEntity();
 }

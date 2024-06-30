@@ -5,16 +5,20 @@ abstract class LocalStorageBase<TKey, TData extends BaseLocalData> {
   Future<void> _initialize() async {}
 
   //implement write functionalities
-  Future<void> write(TKey key, TData data);
+  Future<void> write(TData data);
 
   //implement read functionalities
-  Future<TData?> read(TKey key);
+  TData? read();
 
   //implement remove functionality
-  Future<bool> remove(TKey key);
+  Future<bool> remove();
 
   Future<bool> clearAll();
 
   //implement mapResponse to get TData from json got from local data
   TData mapResponse(Map<String, dynamic> json);
+
+  //set key
+
+  TKey get key;
 }

@@ -1,13 +1,10 @@
 import 'package:styles/src/theme/theme_base.dart';
 
-abstract class ThemeState{}
-
-class ThemeIdleState extends ThemeState{
-  final ThemeBase theme;
-  ThemeIdleState(this.theme);
+abstract class ThemeState{
+  final ThemeBase themeBase;
+  ThemeState(this.themeBase);
 }
 
-// class ThemeProcessingState extends ThemeState{
-//   final AppTheme theme;
-//   ThemeProcessingState(this.theme);
-// }
+class ThemeIdleState extends ThemeState{
+  ThemeIdleState(super.theme);
+}

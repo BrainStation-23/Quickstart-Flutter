@@ -1,13 +1,9 @@
 import 'dart:math' as math;
 
 import 'package:flutter/widgets.dart';
-/// {@template material_spacer}
-/// A spacer refers to the space between two panes in a layout.
-///
-/// Spacers measure 24dp wide.
-/// {@endtemplate}
+
 class MaterialSpacer extends StatelessWidget {
-  /// {@macro material_spacer}
+
   const MaterialSpacer({super.key, this.spacing = 24});
 
   /// Creates a spacer that is 24dp wide.
@@ -17,9 +13,6 @@ class MaterialSpacer extends StatelessWidget {
   Widget build(BuildContext context) => SizedBox(width: spacing);
 }
 
-/// {@template horizontal_spacing}
-/// Spacing that is applied to element to both the left and right.
-/// {@endtemplate}
 class HorizontalSpacing extends EdgeInsets {
   const HorizontalSpacing._(final double value)
       : super.symmetric(horizontal: value);

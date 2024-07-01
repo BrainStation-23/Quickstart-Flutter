@@ -23,11 +23,11 @@ abstract class ThemeBase {
   @nonVirtual
   AppTheme get appTheme {
     if (seedColor == null && colorScheme == null) {
-      throw Exception(
+      throw ArgumentError(
           "Please provide a seedColor or colorScheme to generate theme");
     }
     if (seedColor != null && colorScheme != null) {
-      throw Exception(
+      throw ArgumentError(
           "Can not provide seedColor & ColorScheme at the same time. If you want to generate theme from seedColor then do not provide colorScheme. Similarly do not provide seed color if you want to generate theme from colorScheme");
     }
     if (colorScheme != null) {
@@ -41,7 +41,7 @@ abstract class ThemeBase {
       return AppTheme.fromSeed(mode: themeMode, seed: seedColor!);
     }
 
-    throw Exception(
+    throw ArgumentError(
         "Please provide a seed color or colorScheme to generate theme");
   }
 

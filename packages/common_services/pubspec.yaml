@@ -15,6 +15,11 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   dartz: ^0.10.1
+  flutter_bloc: ^8.1.6
+  logger:
+    path: ../logger
+  utilities:
+    path: ../utilities
 
 dev_dependencies:
   flutter_test:

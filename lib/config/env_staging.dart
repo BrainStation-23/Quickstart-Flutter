@@ -12,4 +12,8 @@ class EnvStaging extends Env{
 
   @override
   EnvType get envType =>EnvType.staging;
+
+  @override
+  // TODO: implement sentryDsn
+  String get sentryDsn => throw UnimplementedError();
 }

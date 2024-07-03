@@ -21,6 +21,9 @@ abstract class Env {
   /// Whether Sentry is enabled.
   bool get enableSentry => sentryDsn.isNotEmpty;
 
+  ///[baseUrl] provides base api url for the environment
+  bool get baseUrl;
+
   //provide common initialization here
   Future<void> init() async {
     WidgetsFlutterBinding.ensureInitialized();

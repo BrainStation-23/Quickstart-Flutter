@@ -16,4 +16,8 @@ class EnvDevelopment extends Env{
   @override
   // TODO: implement sentryDsn
   String get sentryDsn => throw UnimplementedError();
+
+  @override
+  // TODO: implement baseUrl
+  bool get baseUrl => throw UnimplementedError();
 }

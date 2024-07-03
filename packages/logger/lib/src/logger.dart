@@ -1,5 +1,7 @@
 part of logger;
 
+final LoggerBase logger = Logger();
+
 final class Logger extends LoggerBase {
   final _logger = logging.Logger('BS_QUICKSTART_FLUTTER');
 

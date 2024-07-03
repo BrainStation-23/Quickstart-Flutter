@@ -12,4 +12,8 @@ class EnvDevelopment extends Env{
 
   @override
   EnvType get envType =>EnvType.development;
+
+  @override
+  // TODO: implement sentryDsn
+  String get sentryDsn => throw UnimplementedError();
 }

@@ -12,4 +12,8 @@ class EnvProduction extends Env{
 
   @override
   EnvType get envType =>EnvType.production;
+
+  @override
+  // TODO: implement sentryDsn
+  String get sentryDsn => throw UnimplementedError();
 }

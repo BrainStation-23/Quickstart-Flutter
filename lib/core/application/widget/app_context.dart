@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:styles/styles.dart';
 
 import '../../../navigations/route_generator.dart';
+import '../../intialization/models/app_storage.dart';
 
 class AppContext extends StatelessWidget {
   const AppContext({super.key});
@@ -12,10 +14,14 @@ class AppContext extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeBase theme = ThemeScope.of(context);
+    final AppStorage appStorage = RepositoryProvider.of(context);
     return MaterialApp.router(
       theme: theme.themeData,
       themeMode: theme.themeMode,
       routerConfig: RouteGenerator.router,
+      locale: appStorage.localization.currentLocale(context),
+      supportedLocales: appStorage.localization.supportedLocale,
+      localizationsDelegates: appStorage.localization.localizationsDelegates,
       // TODO: You may want to override the default text scaling behavior.
       builder: (context, child) => MediaQuery.withClampedTextScaling(
         key: _globalKey,

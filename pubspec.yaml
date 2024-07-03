@@ -27,6 +27,8 @@ dependencies:
     path: packages/tracking_manager
   common_services:
     path: packages/common_services
+  localization:
+    path: packages/localization
 
 
 dev_dependencies:

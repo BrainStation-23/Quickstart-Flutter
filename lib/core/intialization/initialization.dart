@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate/config/env.dart';
 import 'package:flutter_boilerplate/core/application/theme/theme_impl.dart';
+import 'package:localization/localization.dart';
 import 'package:logger/logger.dart';
 import 'package:styles/styles.dart';
 import 'package:tracking_manager/tracking_manager.dart';
@@ -15,8 +16,12 @@ final class Initialization {
     ThemeCubit themeCubit = await _initThemeCubit();
     ErrorTrackingManager errorTrackingManager =
         await _initErrorTrackingManager();
+    LocalizationBase localization = await _initLocalization();
     return AppStorage(
-        themeCubit: themeCubit, errorTrackingManager: errorTrackingManager);
+      themeCubit: themeCubit,
+      errorTrackingManager: errorTrackingManager,
+      localization: localization,
+    );
   }
 
   Future<ErrorTrackingManager> _initErrorTrackingManager() async {
@@ -34,12 +39,20 @@ final class Initialization {
   }
 
   Future<ThemeCubit> _initThemeCubit() async {
-    ///TODO:: handle initial theme mode;
+    ///TODO:: handle initial/saved theme mode;
     ThemeMode mode = ThemeMode.light;
     ThemeBase theme = ThemeImpl(mode: mode);
     final ThemeState initialState = ThemeIdleState(theme);
     ThemeCubit themeCubit = ThemeCubit(initialState);
 
     return themeCubit;
+  }
+
+  Future<LocalizationBase> _initLocalization() async {
+    //TODO:: handle initial/saved locale
+    String initialLanguageCode = "en";
+    LocalizationBase localization = SlangLocalizationImpl(initialLanguageCode);
+
+    return localization;
   }
 }

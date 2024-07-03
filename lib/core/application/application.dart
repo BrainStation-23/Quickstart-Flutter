@@ -22,11 +22,13 @@ class _ApplicationState extends State<Application> {
   Widget build(BuildContext context) {
     return DefaultAssetBundle(
       bundle: SentryAssetBundle(),
-      child: RepositoryProvider(
+      child: RepositoryProvider<AppStorage>(
         create: (context) => widget.appStorage,
         child: ThemeScope(
           themeCubit: widget.appStorage.themeCubit,
-          child:const AppContext(),
+          child: widget.appStorage.localization.localizationScope(
+            child: const AppContext(),
+          ),
         ),
       ),
     );

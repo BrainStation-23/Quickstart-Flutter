@@ -307,20 +307,20 @@ To start using this boilerplate template, follow these steps:
       For logging there is an abstract class `LoggerBase` for managing logging. 
       
       ```dart
-       /// Logs the error to the console
-      void error(Object message, {Object? error, StackTrace? stackTrace});
+         /// Logs the error to the console
+         void error(Object message, {Object? error, StackTrace? stackTrace});
 
-      /// Logs the warning to the console
-      void warning(Object message);
+         /// Logs the warning to the console
+         void warning(Object message);
 
-      /// Logs the info to the console
-      void info(Object message);
+         /// Logs the info to the console
+         void info(Object message);
 
-      /// Logs the debug to the console
-      void debug(Object message);
+         /// Logs the debug to the console
+         void debug(Object message);
 
-      /// Logs the verbose to the console
-      void verbose(Object message);
+         /// Logs the verbose to the console
+         void verbose(Object message);
  
       ```
 
@@ -333,19 +333,19 @@ To start using this boilerplate template, follow these steps:
     For theme we have provided abstract `ThemeBase` class. By implementing this class we can provide `seedColor` or `colorScheme` along with `themeMode` generate `AppTheme` . `AppTheme` provides `themeData` to be used in the application. 
 
     ```dart
-      final class ThemeImpl extends ThemeBase {
-      final ThemeMode mode;
-      ThemeImpl({
-         required this.mode,
-      });
+         final class ThemeImpl extends ThemeBase {
+         final ThemeMode mode;
+         ThemeImpl({
+            required this.mode,
+         });
 
-      @override
-      ThemeMode get themeMode => mode;
+         @override
+         ThemeMode get themeMode => mode;
 
-      @override
-      // TODO: implement colorScheme
-      ColorScheme? get colorScheme => throw UnimplementedError();
-      }
+         @override
+         // TODO: implement colorScheme
+         ColorScheme? get colorScheme => throw UnimplementedError();
+         }
 
     ```  
 
@@ -353,7 +353,75 @@ To start using this boilerplate template, follow these steps:
 
 
    
+   ### Putting it all together
+     In the main app level, everything is put into place to use in the application. In the application level `AppStorage` class is provided to store dependencies such as other microfrontends. Feel free to add your microfrontend in the `AppStorage`.
 
+     ```dart
+
+         ///[AppStorage] holds [themeCubit], [errorTrackingManager], [localization] to use in everywhere
+         ///It can also be used to feed dependencies across the application
+         ///If there are need for any other dependencies to be need. Please incorporate it in [AppStorage]
+         class AppStorage {
+         AppStorage({
+            required this.themeCubit,
+            required this.errorTrackingManager,
+            required this.localization,
+         });
+
+         final ThemeCubit themeCubit;
+         final ErrorTrackingManager errorTrackingManager;
+         final LocalizationBase localization;
+         }
+
+
+         DefaultAssetBundle(
+            bundle: SentryAssetBundle(),
+            child: RepositoryProvider<AppStorage>(
+            create: (context) => widget.appStorage,
+            child: ThemeScope(
+               themeCubit: widget.appStorage.themeCubit,
+               child: widget.appStorage.localization.localizationScope(
+                  child: const AppContext(),
+               ),
+            ),
+            ),
+         ) 
+
+
+
+         class AppContext extends StatelessWidget {
+         const AppContext({super.key});
+
+         // This global key is needed for [MaterialApp]
+         // to work properly when Widgets Inspector is enabled.
+         static final _globalKey = GlobalKey();
+         @override
+         Widget build(BuildContext context) {
+            final ThemeBase theme = ThemeScope.of(context);
+            final AppStorage appStorage = RepositoryProvider.of(context);
+            return MaterialApp.router(
+               theme: theme.themeData,
+               themeMode: theme.themeMode,
+               routerConfig: RouteGenerator.router,
+               locale: appStorage.localization.currentLocale(context),
+               supportedLocales: appStorage.localization.supportedLocale,
+               localizationsDelegates: appStorage.localization.localizationsDelegates,
+               // TODO: You may want to override the default text scaling behavior.
+               builder: (context, child) => MediaQuery.withClampedTextScaling(
+               key: _globalKey,
+               minScaleFactor: 1.0,
+               maxScaleFactor: 2.0,
+               child: child!,
+               ),
+            );
+         }
+         }
+
+
+
+
+
+     ```
 
 
 
@@ -379,7 +447,7 @@ Your contributions will help the Flutter community benefit from this template an
 
 ## Acknowledgments
 
-This boilerplate template is provided by Brain Station 23 Ltd, a leading technology company known
+This boilerplate template is provided by Brain Station 23 PLC, a leading technology company known
 for its expertise in software development. We thank Brain Station 23 Ltd for creating and sharing
 this template with the Flutter community, helping developers get started with robust and
 feature-rich Flutter applications.

@@ -97,7 +97,266 @@ To start using this boilerplate template, follow these steps:
 4. **Build Your App:**
    Leverage the provided features and architecture to build your Flutter app efficiently. Utilize
    the state management, localization, error handling, network calls, local storage, and dependency
-   injection features to deliver a high-quality and user-friendly application.\
+   injection features to deliver a high-quality and user-friendly application.
+
+
+
+## Usage
+   Now lets delve deeply into the usage of our developed common microfrontends. Lets discuss how we can use them in our applications and incorporate them consistently.
+
+   ### Alets & loading
+      We have an abstract `Alert` class, which has initially `success`, `error`, `warning`, `info` and `confirmation` functionalities. Please implement those functionalities per your requirement needs. Feel free to add other alerts here as per your need.
+
+      ```dart
+        class SuccessAlert extends Alert {
+         final BuildContext context;
+         final String title;
+         final String content;
+         final String confirmText;
+         final VoidCallback onConfirm;
+
+         const SuccessAlert({
+            required this.context,
+            required this.title,
+            required this.content,
+            this.confirmText = "OK",
+            required this.onConfirm,
+         });
+
+         @override
+         void show() {
+            throw UnimplementedError();
+         }
+      }
+      ```
+
+      Also we have an abstract `Loading` class with `show` and `hide` functionalilites. Feel free to add the implementation as per your requirements and needs.
+
+      ```dart
+         class ShowLoading extends Loading {
+            final BuildContext context;
+            String message;
+
+            ShowLoading({
+               required this.context,
+               this.message = "Loading...",
+            });
+            @override
+            void execute() {
+               throw UnimplementedError();
+            }
+         }
+      ```
+
+
+   ### Api Base
+      Api Base library provides abstract `ApiBase` class with `get`, `post`, `path`, `delete` functionalities. It is currently implemented using dio in the abstract class `DioApiBase`. Please implement them for each of your apis. 
+
+      ```dart
+         class LoginApi
+            extends DioApiBase<LoginRequest, AuthTokenResponse, AuthErrorResponse> {
+         LoginApi() : super(Links.loginUrl);
+
+         @override
+         AuthErrorResponse mapError({String? message, Map<String, dynamic>? json}) {
+            throw UnimplementedError();
+         }
+
+         @override
+         AuthTokenResponse mapResponse(Map<String, dynamic> json) {
+            throw UnimplementedError();
+         }
+
+         @override
+         Map<String, String> get headers => throw UnimplementedError();
+         }
+      ```
+
+     `DioApiBase` uses 2 abstract class `ApiRequest` and `ApiResponse` to get request data and send response. When using please implement them as well
+
+     ```dart
+         class LoginRequest extends ApiRequest {
+         final String accountCode;
+         final String password;
+         LoginRequest(this.accountCode, this.password);
+
+         @override
+         Map<String, dynamic> toJson() {
+            return {
+               "accountCode": accountCode,
+               "password": password,
+            };
+         }
+       }
+
+
+         class AuthTokenResponse extends ApiResponse {
+         final String accessToken;
+         final String refreshToken;
+
+         AuthTokenResponse(
+            this.accessToken,
+            this.refreshToken,
+         );
+
+         factory AuthTokenResponse.fromJson(Map<String, dynamic> json) {
+            return AuthTokenResponse(
+               json["accessToken"],
+               json["refreshToken"],
+            );
+         }
+
+         AuthTokens toEntity() {
+            return AuthTokens(accessToken: accessToken, refreshToken: refreshToken);
+         }
+        }
+
+         abstract class AuthErrorResponse<T> extends ApiResponse {
+
+         T toEntity();
+        }
+
+     ```
+
+      When calling the api, it may be used as
+
+      ```dart
+      Either<AuthTokenResponse, AuthErrorResponse> response =
+         await LoginApi().post(request);
+      ```
+
+      If it is used like this, then every api will return a response or an error type safely
+
+   ### Biometric Auth
+      `BiometricAuth` is a small but helpful library that can provide biometric authentication feature easily. It is currently implemented using  `local_auth` in the `LocalAuthImpl` class. If needed, it can be implemented using other library as well by implementing the abstract `BiometricAuth` class
+
+      ```dart
+         abstract class BiometricAuth{
+            Future<bool> canCheckBiometric();
+            Future<bool> authenticateWithBiometric();
+         }
+
+      ```
+
+   ### Local Storage
+      `local_storage` library is used for saving data locally. It provides abstract `LocalStorageBase` class for basic usecase of saving data locally. There is also an implementation using `shared_preference` is provided in the `SharedPreferenceBase` class.If there is a need for other library to be used, please provide implementation of `LocalStorageBase` class. There is also an abstract class `BaseLocalData` for saving data. Please extend this class to the data you want to save
+
+      ```dart
+         class TokensLocalApi extends SharedPreferenceBase<AuthTokenLocalData> {
+            TokensLocalApi(super.preference);
+
+            @override
+            AuthTokenLocalData mapResponse(Map<String, dynamic> json) {
+               return AuthTokenLocalData.fromJson(json);
+            }
+
+            @override
+            String get key => ConstantStrings.tokenKey;
+         }
+
+
+         // the local data to be saved
+         class AuthTokenLocalData extends BaseLocalData<AuthTokens> {
+            final String accessToken;
+            final String refreshToken;
+
+            AuthTokenLocalData(
+               this.accessToken,
+               this.refreshToken,
+            );
+
+            factory AuthTokenLocalData.fromJson(Map<String, dynamic> json) {
+               return AuthTokenLocalData(json["accessToken"], json["refreshToken"]);
+            }
+
+            @override
+            AuthTokens toEntity() {
+               return AuthTokens(accessToken: accessToken, refreshToken: refreshToken);
+            }
+
+            @override
+            Map<String, dynamic> toJson() {
+               return {"accessToken": accessToken, "refreshToken": refreshToken};
+            }
+         }
+
+      ```
+   ### Localization
+      For localization, there is an abstract class `LocalizationBase` for managing localization. Currently in our boilerplate, we used `slang` to implement the `LocalizationBase` in the `SlangLocalizationImpl` class. If you want to use other implementation for localization, please implement the `LocalizationBase` class.
+
+      ```dart
+         abstract class LocalizationBase<LocaleType, TranslationType> {
+            void initializeLocalization(String languageCode);
+
+            Widget localizationScope({required Widget child});
+
+            Locale currentLocale(BuildContext context);
+
+            List<Locale> get supportedLocale;
+
+            List<LocalizationsDelegate<void>> get localizationsDelegates;
+
+            void changeLocale(LocaleType locale);
+
+            TranslationType text(BuildContext context);
+         }
+
+      ```
+
+   ### Logger
+      For logging there is an abstract class `LoggerBase` for managing logging. 
+      
+      ```dart
+       /// Logs the error to the console
+      void error(Object message, {Object? error, StackTrace? stackTrace});
+
+      /// Logs the warning to the console
+      void warning(Object message);
+
+      /// Logs the info to the console
+      void info(Object message);
+
+      /// Logs the debug to the console
+      void debug(Object message);
+
+      /// Logs the verbose to the console
+      void verbose(Object message);
+ 
+      ```
+
+     In our boilerplate, `LoggerBase` is implemented using `logging` library in the `Logger` class.
+
+   ### Tracking Manager
+     For tracking errors and warning, there is an abstract class called `ErrorTrackingManagerBase`. In our boilerplate, We implemented `ErrorTrackingManagerBase` using `sentry` in the `SentryTrackingManager`. Please implement `ErrorTrackingManagerBase` if you want to use other custom implementation yourself.
+
+   ### Theme
+    For theme we have provided abstract `ThemeBase` class. By implementing this class we can provide `seedColor` or `colorScheme` along with `themeMode` generate `AppTheme` . `AppTheme` provides `themeData` to be used in the application. 
+
+    ```dart
+      final class ThemeImpl extends ThemeBase {
+      final ThemeMode mode;
+      ThemeImpl({
+         required this.mode,
+      });
+
+      @override
+      ThemeMode get themeMode => mode;
+
+      @override
+      // TODO: implement colorScheme
+      ColorScheme? get colorScheme => throw UnimplementedError();
+      }
+
+    ```  
+
+     It also provides `ThemeCubit` for handling theme change through `ThemeScope` widget
+
+
+   
+
+
+
+
 
 ## TODO List
 

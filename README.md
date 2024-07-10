@@ -105,9 +105,9 @@ To start using this boilerplate template, follow these steps:
    Now lets delve deeply into the usage of our developed common microfrontends. Lets discuss how we can use them in our applications and incorporate them consistently.
 
    ### Alets & loading
-      We have an abstract `Alert` class, which has initially `success`, `error`, `warning`, `info` and `confirmation` functionalities. Please implement those functionalities per your requirement needs. Feel free to add other alerts here as per your need.
+   We have an abstract `Alert` class, which has initially `success`, `error`, `warning`, `info` and `confirmation` functionalities. Please implement those functionalities per your requirement needs. Feel free to add other alerts here as per your need.
 
-      ```dart
+   ```dart
         class SuccessAlert extends Alert {
          final BuildContext context;
          final String title;
@@ -128,11 +128,11 @@ To start using this boilerplate template, follow these steps:
             throw UnimplementedError();
          }
       }
-      ```
+   ```
 
-      Also we have an abstract `Loading` class with `show` and `hide` functionalilites. Feel free to add the implementation as per your requirements and needs.
+   Also we have an abstract `Loading` class with `show` and `hide` functionalilites. Feel free to add the implementation as per your requirements and needs.
 
-      ```dart
+   ```dart
          class ShowLoading extends Loading {
             final BuildContext context;
             String message;
@@ -146,13 +146,13 @@ To start using this boilerplate template, follow these steps:
                throw UnimplementedError();
             }
          }
-      ```
+   ```
 
 
    ### Api Base
-      Api Base library provides abstract `ApiBase` class with `get`, `post`, `path`, `delete` functionalities. It is currently implemented using dio in the abstract class `DioApiBase`. Please implement them for each of your apis. 
+   Api Base library provides abstract `ApiBase` class with `get`, `post`, `path`, `delete` functionalities. It is currently implemented using dio in the abstract class `DioApiBase`. Please implement them for each of your apis. 
 
-      ```dart
+   ```dart
          class LoginApi
             extends DioApiBase<LoginRequest, AuthTokenResponse, AuthErrorResponse> {
          LoginApi() : super(Links.loginUrl);
@@ -170,11 +170,11 @@ To start using this boilerplate template, follow these steps:
          @override
          Map<String, String> get headers => throw UnimplementedError();
          }
-      ```
+   ```
 
-     `DioApiBase` uses 2 abstract class `ApiRequest` and `ApiResponse` to get request data and send response. When using please implement them as well
+   `DioApiBase` uses 2 abstract class `ApiRequest` and `ApiResponse` to get request data and send response. When using please implement them as well
 
-     ```dart
+   ```dart
          class LoginRequest extends ApiRequest {
          final String accountCode;
          final String password;
@@ -216,32 +216,32 @@ To start using this boilerplate template, follow these steps:
          T toEntity();
         }
 
-     ```
+   ```
 
-      When calling the api, it may be used as
+   When calling the api, it may be used as
 
-      ```dart
+   ```dart
       Either<AuthTokenResponse, AuthErrorResponse> response =
          await LoginApi().post(request);
-      ```
+   ```
 
-      If it is used like this, then every api will return a response or an error type safely
+   If it is used like this, then every api will return a response or an error type safely
 
    ### Biometric Auth
-      `BiometricAuth` is a small but helpful library that can provide biometric authentication feature easily. It is currently implemented using  `local_auth` in the `LocalAuthImpl` class. If needed, it can be implemented using other library as well by implementing the abstract `BiometricAuth` class
+   `BiometricAuth` is a small but helpful library that can provide biometric authentication feature easily. It is currently implemented using  `local_auth` in the `LocalAuthImpl` class. If needed, it can be implemented using other library as well by implementing the abstract `BiometricAuth` class
 
-      ```dart
+   ```dart
          abstract class BiometricAuth{
             Future<bool> canCheckBiometric();
             Future<bool> authenticateWithBiometric();
          }
 
-      ```
+   ```
 
    ### Local Storage
-      `local_storage` library is used for saving data locally. It provides abstract `LocalStorageBase` class for basic usecase of saving data locally. There is also an implementation using `shared_preference` is provided in the `SharedPreferenceBase` class.If there is a need for other library to be used, please provide implementation of `LocalStorageBase` class. There is also an abstract class `BaseLocalData` for saving data. Please extend this class to the data you want to save
+   `local_storage` library is used for saving data locally. It provides abstract `LocalStorageBase` class for basic usecase of saving data locally. There is also an implementation using `shared_preference` is provided in the `SharedPreferenceBase` class.If there is a need for other library to be used, please provide implementation of `LocalStorageBase` class. There is also an abstract class `BaseLocalData` for saving data. Please extend this class to the data you want to save
 
-      ```dart
+   ```dart
          class TokensLocalApi extends SharedPreferenceBase<AuthTokenLocalData> {
             TokensLocalApi(super.preference);
 
@@ -280,11 +280,12 @@ To start using this boilerplate template, follow these steps:
             }
          }
 
-      ```
-   ### Localization
-      For localization, there is an abstract class `LocalizationBase` for managing localization. Currently in our boilerplate, we used `slang` to implement the `LocalizationBase` in the `SlangLocalizationImpl` class. If you want to use other implementation for localization, please implement the `LocalizationBase` class.
+   ```
 
-      ```dart
+   ### Localization
+   For localization, there is an abstract class `LocalizationBase` for managing localization. Currently in our boilerplate, we used `slang` to implement the `LocalizationBase` in the `SlangLocalizationImpl` class. If you want to use other implementation for localization, please implement the `LocalizationBase` class.
+
+   ```dart
          abstract class LocalizationBase<LocaleType, TranslationType> {
             void initializeLocalization(String languageCode);
 
@@ -301,12 +302,12 @@ To start using this boilerplate template, follow these steps:
             TranslationType text(BuildContext context);
          }
 
-      ```
+   ```
 
    ### Logger
-      For logging there is an abstract class `LoggerBase` for managing logging. 
+   For logging there is an abstract class `LoggerBase` for managing logging. 
       
-      ```dart
+   ```dart
          /// Logs the error to the console
          void error(Object message, {Object? error, StackTrace? stackTrace});
 
@@ -322,15 +323,15 @@ To start using this boilerplate template, follow these steps:
          /// Logs the verbose to the console
          void verbose(Object message);
  
-      ```
+   ```
 
-     In our boilerplate, `LoggerBase` is implemented using `logging` library in the `Logger` class.
+   In our boilerplate, `LoggerBase` is implemented using `logging` library in the `Logger` class.
 
    ### Tracking Manager
-     For tracking errors and warning, there is an abstract class called `ErrorTrackingManagerBase`. In our boilerplate, We implemented `ErrorTrackingManagerBase` using `sentry` in the `SentryTrackingManager`. Please implement `ErrorTrackingManagerBase` if you want to use other custom implementation yourself.
+   For tracking errors and warning, there is an abstract class called `ErrorTrackingManagerBase`. In our boilerplate, We implemented `ErrorTrackingManagerBase` using `sentry` in the `SentryTrackingManager`. Please implement `ErrorTrackingManagerBase` if you want to use other custom implementation yourself.
 
    ### Theme
-    For theme we have provided abstract `ThemeBase` class. By implementing this class we can provide `seedColor` or `colorScheme` along with `themeMode` generate `AppTheme` . `AppTheme` provides `themeData` to be used in the application. 
+   For theme we have provided abstract `ThemeBase` class. By implementing this class we can provide `seedColor` or `colorScheme` along with `themeMode` generate `AppTheme` . `AppTheme` provides `themeData` to be used in the application. 
 
     ```dart
          final class ThemeImpl extends ThemeBase {
@@ -349,14 +350,14 @@ To start using this boilerplate template, follow these steps:
 
     ```  
 
-     It also provides `ThemeCubit` for handling theme change through `ThemeScope` widget
+   It also provides `ThemeCubit` for handling theme change through `ThemeScope` widget
 
 
    
    ### Putting it all together
-     In the main app level, everything is put into place to use in the application. In the application level `AppStorage` class is provided to store dependencies such as other microfrontends. Feel free to add your microfrontend in the `AppStorage`.
+   In the main app level, everything is put into place to use in the application. In the application level `AppStorage` class is provided to store dependencies such as other microfrontends. Feel free to add your microfrontend in the `AppStorage`.
 
-     ```dart
+   ```dart
 
          ///[AppStorage] holds [themeCubit], [errorTrackingManager], [localization] to use in everywhere
          ///It can also be used to feed dependencies across the application
@@ -421,7 +422,7 @@ To start using this boilerplate template, follow these steps:
 
 
 
-     ```
+   ```
 
 
 

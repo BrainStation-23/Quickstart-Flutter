@@ -9,4 +9,8 @@ final class ThemeImpl extends ThemeBase {
 
   @override
   ThemeMode get themeMode => mode;
+
+  @override
+  // TODO: implement colorScheme
+  ColorScheme? get colorScheme => throw UnimplementedError();
 }

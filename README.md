@@ -15,11 +15,10 @@ practices and industry standards.
    provides examples of how to create and use Blocs, making it easier for you to handle application
    state seamlessly.
 
-2. **Localization Support using ARB Files:**
+2. **Localization Support using json Files:**
    Providing a localized experience to your app users is crucial for a global audience. This
-   boilerplate template provides localization support using ARB (Application Resource Bundle) files,
-   which are a standard format for managing translations in Flutter apps. The ARB files allow you to
-   store translations in key-value pairs for different locales. With the provided ARB files, you can
+   boilerplate template provides localization support using json files using slang. The json files allow you to
+   store translations in key-value pairs for different locales. With the provided json files, you can
    easily add, update, or remove translations for various languages, enabling a personalized user
    experience.
 
@@ -57,6 +56,9 @@ practices and industry standards.
    while the `presentation` layer handles the UI and user interactions. Clean Architecture promotes
    code reusability, maintainability, and testability, making your app scalable and easier to
    maintain as it grows.
+
+8. **Logger and Tracking manager**
+   The logger provides functionality to record and display various levels of messages (debug, info, warning, error) during the execution of your Flutter application. It helps in monitoring application behavior and diagnosing issues.
 
 ## Getting Started
 

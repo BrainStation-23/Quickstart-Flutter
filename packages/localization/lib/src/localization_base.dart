@@ -8,9 +8,10 @@ abstract class LocalizationBase<LocaleType, TranslationType> {
   Locale currentLocale(BuildContext context);
 
   List<Locale> get supportedLocale;
+
   List<LocalizationsDelegate<void>> get localizationsDelegates;
+
   void changeLocale(LocaleType locale);
 
   TranslationType text(BuildContext context);
 }
-

@@ -20,6 +20,10 @@ dependencies:
     path: ../logger
   utilities:
     path: ../utilities
+  api_base:
+    path: ../api_base
+
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:

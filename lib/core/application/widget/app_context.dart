@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_boilerplate/core/application/theme/theme_impl.dart';
 import 'package:styles/styles.dart';
 
 import '../../../navigations/route_generator.dart';
@@ -13,10 +14,11 @@ class AppContext extends StatelessWidget {
   static final _globalKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    final ThemeBase theme = ThemeScope.of(context);
+    final ThemeImpl theme = ThemeScope.of<ThemeImpl>(context);
+    AppTheme appTheme = theme.generateTheme();
     final AppStorage appStorage = RepositoryProvider.of(context);
     return MaterialApp.router(
-      theme: theme.themeData,
+      theme: appTheme.themeData,
       themeMode: theme.themeMode,
       routerConfig: RouteGenerator.router,
       locale: appStorage.localization.currentLocale(context),

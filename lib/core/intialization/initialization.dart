@@ -40,8 +40,8 @@ final class Initialization {
 
   Future<ThemeCubit> _initThemeCubit() async {
     ///TODO:: handle initial/saved theme mode;
-    ThemeMode mode = ThemeMode.light;
-    ThemeBase theme = ThemeImpl(mode: mode);
+
+    ThemeImpl theme = ThemeImpl();
     final ThemeState initialState = ThemeIdleState(theme);
     ThemeCubit themeCubit = ThemeCubit(initialState);
 

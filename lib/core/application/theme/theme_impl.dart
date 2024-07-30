@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:styles/styles.dart';
 
-final class ThemeImpl extends ThemeBase {
-  final ThemeMode mode;
-  ThemeImpl({
-    required this.mode,
-  });
+final class ThemeImpl extends SeedColorThemeGenerator {
+  @override
+  // TODO: implement seed
+  Color get seed => throw UnimplementedError();
 
   @override
-  ThemeMode get themeMode => mode;
+  // TODO: implement themeMode
+  ThemeMode get themeMode => throw UnimplementedError();
 
-  @override
-  // TODO: implement colorScheme
-  ColorScheme? get colorScheme => throw UnimplementedError();
 }
